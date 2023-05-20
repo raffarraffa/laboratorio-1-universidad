@@ -22,18 +22,21 @@ public class Conexion {
 
     private Conexion() {
     }
-
+/**
+ * metodo para conectase a la base de datos
+ * @return
+ * @throws IOException 
+ */
     public static Connection getConnection() throws IOException {
         String[] arguments = {"src\\config.csv", "false", ","};// patch, bandera 1º linea no valida, separador datos
 
-//        if (user == null) {
-//            getConfigCSV(arguments);
-//        }
+        if (user == null) {
+            getConfigCSV(arguments);
+        }
         if (connection == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-//                connection = DriverManager.getConnection(url, user, pass);
-                connection = DriverManager.getConnection("jdbc:mysql://mysql-rafalopez.alwaysdata.net/rafalopez_tuds", "rafalopez_tuds", "MalditaEDA");
+                connection = DriverManager.getConnection(url, user, pass);
                 System.out.println("Conectado exitosamente!");
 
             } catch (ClassNotFoundException | SQLException e) {
@@ -45,19 +48,12 @@ public class Conexion {
         }
         return connection;
     }
-
-    public static void setUrl(String url) {
-        Conexion.url = url;
-    }
-
-    public static void setUser(String user) {
-        Conexion.user = user;
-    }
-
-    public static void setPassword(String password) {
-        Conexion.pass = pass;
-    }
-
+    /**
+     * Metodo que lee un archivo csv para extraer las credenciales para acceder a la base de datos en remoto
+     * @param args
+     * @throws RuntimeException
+     * @throws IOException 
+     */
     public static void getConfigCSV(String[] args) throws RuntimeException, IOException {
         File archivo = new File(args[0]);
         BufferedReader lineas = null;
@@ -65,7 +61,7 @@ public class Conexion {
             FileReader archivo_leido; // objeto lectura archivo
             archivo_leido = new FileReader(args[0]);
             lineas = new BufferedReader(archivo_leido);
-            String linea = "", datos = "";
+            String linea;
             while ((linea = lineas.readLine()) != null) {
                 String[] linea_procesada = linea.split(args[2]);
                 Conexion.user = linea_procesada[0];

@@ -16,17 +16,8 @@ import universidad_2.models.Materia;
 public class Universidad_2 {
 
     public static void main(String[] args) throws IOException, SQLException {
-//        Conexion.getConnection();
+        Conexion.getConnection();
 
-        MateriaData data = new MateriaData();
-        ArrayList<Materia> mat = new ArrayList();
-        mat = data.selectMaterias(1);// recibe id_alumno
-        for (Materia materia : mat) {
-            System.out.println(materia);
-        }
-        LocalDate date = LocalDate.now();
-
-        Alumno alu = new Alumno(1, "4369046", "sadf", "asdf", date, false);
-
+   
     }
 }
