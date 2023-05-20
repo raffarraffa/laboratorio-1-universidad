@@ -64,7 +64,33 @@ public class MateriaData {
             e.printStackTrace();
         }
         return materias;
-
     }
 
+    public Materia selectMateria(String nombre) throws IOException {
+        Materia materia = new Materia();
+        try {
+            String consulta = "SELECT * from materia WHERE nombre like ? ;";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setString(1, nombre);
+            ResultSet result = stmt.executeQuery();
+            System.out.println("dsfgh");
+            if (result == null) {
+                System.out.println("mierda");
+            } else {
+                System.out.println("ok");
+            }
+            if (result.next()) {
+                materia.setId_materia(result.getInt("id_materia"));
+                materia.setNombre(result.getString("nombre"));
+                materia.setAnio(result.getInt("anio"));
+                materia.setEstado(result.getBoolean("estado"));
+            }
+            result.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return materia;
+    }
+
+    // Premitir al personal administrativo listar los alumnos inscriptos en una materia
 }
