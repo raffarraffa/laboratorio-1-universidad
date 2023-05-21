@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import static jdk.nashorn.internal.objects.Global.getDate;
 import universidad_2.models.Alumno;
 import universidad_2.models.Materia;
@@ -153,6 +154,55 @@ public class AlumnoData {
             e.printStackTrace();
         }
         return alumnos;
+    }
+
+    public int udateAlumno(Alumno alumno) throws IOException {
+        int result = 0;
+        try {
+            String consulta = "UPDATE  `alumno` SET `dni`= ? , `apellido`= ? , `nombre`= ? , `fecha_nacimiento`= ? , `estado`= ?    WHERE `alumno`.`id_alumno` = ? ;";
+            //String consulta = "UPDATE  `inscripcion` SET `nota`= ? WHERE `inscripcion`.`id_alumno` = ? AND `id_materia`= ? AND `nota` < ? ;";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setString(1, alumno.getDni());
+            stmt.setString(2, alumno.getApellido());
+            stmt.setString(3, alumno.getNombre());
+            stmt.setDate(4, java.sql.Date.valueOf(alumno.getFecha_nacimiento()));
+            stmt.setBoolean(5, alumno.isEstado());
+            stmt.setInt(6, alumno.getId_alumno());
+            result = stmt.executeUpdate();
+            System.out.println("Resultado sentencia " + result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            System.out.println("Se actualizo al alumno ");
+        } else {
+            System.out.println("No se actualizo al alumno");
+        }
+        return result;
+    }
+
+    public int insertAlumno(Alumno alumno) throws IOException {
+        int result = 0;
+        try {
+            String consulta = "INSERT INTO `alumno` (`dni`, `apellido`, `nombre`, `fecha_nacimiento`) VALUE (? , ? , ? ,? );";
+            //String consulta = "UPDATE  `inscripcion` SET `nota`= ? WHERE `inscripcion`.`id_alumno` = ? AND `id_materia`= ? AND `nota` < ? ;";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setString(1, alumno.getDni());
+            stmt.setString(2, alumno.getApellido());
+            stmt.setString(3, alumno.getNombre());
+            stmt.setDate(4, java.sql.Date.valueOf(alumno.getFecha_nacimiento()));
+            result = stmt.executeUpdate();
+            System.out.println("Resultado sentencia " + result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            System.out.println("Se creo alumno");
+        } else {
+            System.out.println("No se creo alumno");
+            return 0;
+        }
+        return result;
     }
 
     @Override

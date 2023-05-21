@@ -19,7 +19,7 @@ public class Materia {
     public Materia() {
     }
 
-    public Materia(String nombre, int anio, boolean estado) {
+    public Materia(String nombre, int anio) {
         this.nombre = nombre;
         this.anio = anio;
         this.estado = estado;

@@ -39,12 +39,13 @@ public class MateriaData {
         this.estado = estado;
     }
 
-    public ArrayList<Materia> selectMaterias(int id) throws IOException, SQLException { // selecciona materias de un alumno
+    // selecciona materias de un alumno recibe id alumnopor parametro
+    public ArrayList<Materia> selectMaterias(int id_alumno) throws IOException, SQLException {
         ArrayList<Materia> materias = new ArrayList();
         try {
             String consulta = "SELECT * from materia WHERE id_materia IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            stmt.setInt(1, id);
+            stmt.setInt(1, id_alumno);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("mierda");
@@ -90,6 +91,53 @@ public class MateriaData {
             e.printStackTrace();
         }
         return materia;
+    }
+
+    public int insertMateria(Materia materia) throws IOException {
+        int result = 0;
+        try {
+            String consulta = "INSERT INTO `materia` (`nombre`, `anio`) VALUE (? , ? );";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setString(1, materia.getNombre());
+            stmt.setInt(2, materia.getAnio());
+            result = stmt.executeUpdate();
+            System.out.println("Resultado sentencia " + result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            System.out.println("Se creo materia");
+        } else {
+            System.out.println("No se creo materia");
+            return 0;
+        }
+        return result;
+    }
+
+    public int updateMateria(Materia materia) throws IOException {
+        int result = 0;
+        try {
+            String consulta = "UPDATE  `materia` SET `nombre` = ? , `anio`= ? ,`estado` = ? WHERE `id_materia` = ? ;";
+
+            //String consulta = "UPDATE  `inscripcion` SET `nota`= ? WHERE `inscripcion`.`id_alumno` = ? AND `id_materia`= ? AND `nota` < ? ;";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setString(1, materia.getNombre());
+            stmt.setInt(2, materia.getAnio());
+            stmt.setBoolean(3, materia.isEstado());
+            stmt.setInt(4, materia.getId_materia());
+            result = stmt.executeUpdate();
+            System.out.println(stmt);
+            System.out.println("Resultado sentencia " + result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            System.out.println("Se actualizo materia");
+        } else {
+            System.out.println("No se actualizo materia");
+            return 0;
+        }
+        return result;
     }
 
     // Premitir al personal administrativo listar los alumnos inscriptos en una materia
