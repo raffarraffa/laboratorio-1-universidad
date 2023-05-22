@@ -104,6 +104,7 @@ public class AlumnoData {
             String consulta = "SELECT * from alumno WHERE dni like ? ;";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, dni);
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("Resultado consulta NULL ");
@@ -131,6 +132,7 @@ public class AlumnoData {
             String consulta = "SELECT * from alumno WHERE id_alumno IN (SELECT id_alumno FROM `inscripcion` WHERE `id_materia` = (SELECT id_materia FROM materia WHERE id_materia = ?) );";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setInt(1, materia.getId_materia());
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("mierda");
@@ -166,6 +168,7 @@ public class AlumnoData {
             stmt.setDate(4, java.sql.Date.valueOf(alumno.getFecha_nacimiento()));
             stmt.setBoolean(5, alumno.isEstado());
             stmt.setInt(6, alumno.getId_alumno());
+            System.out.println(stmt);
             result = stmt.executeUpdate();
             System.out.println("Resultado sentencia " + result);
         } catch (SQLException e) {
@@ -189,6 +192,7 @@ public class AlumnoData {
             stmt.setString(2, alumno.getApellido());
             stmt.setString(3, alumno.getNombre());
             stmt.setDate(4, java.sql.Date.valueOf(alumno.getFecha_nacimiento()));
+            System.out.println(stmt);
             result = stmt.executeUpdate();
             System.out.println("Resultado sentencia " + result);
         } catch (SQLException e) {
@@ -219,6 +223,7 @@ public class AlumnoData {
                 consulta = "SELECT * from alumno WHERE 1 ORDER BY `apellido` ;";
             }
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("-- no se encontraron alumnos --");

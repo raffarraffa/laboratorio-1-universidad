@@ -1,12 +1,14 @@
 package universidad_2;
 
 import java.io.IOException;
+import static java.lang.Math.random;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 import universidad_2.controllers.AlumnoData;
 import universidad_2.controllers.Conexion;
 import universidad_2.controllers.InscripcionData;
@@ -81,7 +83,10 @@ public class Universidad_2 {
         // instancia nuevo alumno
         System.out.println("");
         System.out.println("ITEM 5 se carga neuvo alumno a los efectos poder asignarle una materia");
-        Alumno alumno_new = new Alumno("1256949", "GIMENEZ", "Juan Manuel", LocalDate.of(1985, 1, 15));
+        // calcula run dni random
+        Random random = new Random();
+        int dni = random.nextInt(90000) + 10000;
+        Alumno alumno_new = new Alumno(String.valueOf(dni), "GIMENEZ", "Juan Manuel", LocalDate.of(1985, 1, 15));
         Alumno alumno_db = new Alumno();
         // insert base datos nuevo alumno
         alumno_data.insertAlumno(alumno_new);
@@ -117,9 +122,12 @@ public class Universidad_2 {
         System.out.println("ITEM 4 calificar alumno");
         System.out.println("Se implento 2 esquemas diferentes: guardanotamas lata, guarda ultima nota");
         inscripcion_data.updateNota(alumno_db, materia, 8.5);
-        System.out.println("Nota alumno" + inscripcion_data.verificaNotaAlumno(alumno_db, materia));
+        System.out.println("Nota alumno " + inscripcion_data.verificaNotaAlumno(alumno_db, materia));
+        System.out.println("*********************************************");
 
 // Test  modificacion fecha nacimiento y estado alumnos se utiliza unsolo metodo UPDATE que actualizar cualqueir cambio en base al id_alumno, debera devolver error cuando dni duplicado
+        System.out.println("");
+        System.out.println("ITEM 5 se editan alumno");
         System.out.println("Test modificacion fecha nacimiento y estado");
         // se cambia fecha nacimiento, estado y se verifica cambio en 2 ocasiones
         alumno.setFecha_nacimiento(LocalDate.now());
@@ -132,6 +140,24 @@ public class Universidad_2 {
         alumno.setEstado(true);
         alumno_data.udateAlumno(alumno);
         System.out.println(alumno.toString());
+        System.out.println("*********************************************");
+        System.out.println("");
+        System.out.println("ITEM 5 se editan materia ingles");
+        materia.setNombre("CHINO");
+        materia_data.updateMateria(materia);
+        materia = materia_data.selectMateria("CHINO");
+        System.out.println("Materia seleccionada: " + materia.toString());
+        System.out.println("*********************************************");
+        System.out.println("se verifica si esxte ingles");
+        materia = materia_data.selectMateria("Ingles");
+        System.out.println("Materia seleccionada: " + materia.toString());
+        System.out.println("*********************************************");
+        // restaurar porque dara error
+        materia = materia_data.selectMateria("CHINO");
+        materia.setNombre("Ingles");
+        materia_data.updateMateria(materia);
+        materia = materia_data.selectMateria("Ingles");
+        System.out.println("Materia seleccionada: " + materia.toString());
         System.out.println("*********************************************");
 
     }

@@ -47,6 +47,7 @@ public class MateriaData {
             String consulta = "SELECT * from materia WHERE id_materia IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setInt(1, alumno.getId_alumno());
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result.getRow() == 0) {
                 System.out.println(" -- No se encontraron materias para el alumno solicitado--");
@@ -76,6 +77,7 @@ public class MateriaData {
             String consulta = "SELECT * from materia WHERE nombre like ? ;";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, nombre);
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("Resultado consulta NULL ");
@@ -102,6 +104,7 @@ public class MateriaData {
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, materia.getNombre());
             stmt.setInt(2, materia.getAnio());
+            System.out.println(stmt);
             result = stmt.executeUpdate();
             System.out.println("Resultado sentencia " + result);
         } catch (SQLException e) {

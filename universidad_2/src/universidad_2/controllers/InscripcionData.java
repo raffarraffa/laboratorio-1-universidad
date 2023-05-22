@@ -121,6 +121,7 @@ public class InscripcionData {
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setDouble(1, alumno.getId_alumno());
             stmt.setInt(2, materia.getId_materia());
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             System.out.println("Resultado sentencia " + result);
             if (result.next()) {
