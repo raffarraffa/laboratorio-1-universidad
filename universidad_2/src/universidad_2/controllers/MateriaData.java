@@ -49,7 +49,7 @@ public class MateriaData {
             stmt.setInt(1, alumno.getId_alumno());
             ResultSet result = stmt.executeQuery();
             if (result.getRow() == 0) {
-                System.out.println(" -- No se encontraron materias para el alumno solcitado--");
+                System.out.println(" -- No se encontraron materias para el alumno solicitado--");
             } else {
                 System.out.println("-- ok --");
             }

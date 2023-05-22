@@ -113,4 +113,22 @@ public class InscripcionData {
         }
         return result;
     }
+
+    public double verificaNotaAlumno(Alumno alumno, Materia materia) throws IOException {
+        double nota = -1;
+        try {
+            String consulta = "SELECT  `nota` FROM inscripcion  WHERE `inscripcion`.`id_alumno` = ? AND `id_materia`= ? ;";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setDouble(1, alumno.getId_alumno());
+            stmt.setInt(2, materia.getId_materia());
+            ResultSet result = stmt.executeQuery();
+            System.out.println("Resultado sentencia " + result);
+            if (result.next()) {
+                nota = result.getDouble("nota");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nota;
+    }
 }

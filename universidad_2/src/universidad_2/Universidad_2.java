@@ -81,7 +81,7 @@ public class Universidad_2 {
         // instancia nuevo alumno
         System.out.println("");
         System.out.println("ITEM 5 se carga neuvo alumno a los efectos poder asignarle una materia");
-        Alumno alumno_new = new Alumno("1256989", "GOMEZ", "Juan Manuel", LocalDate.of(1985, 1, 15));
+        Alumno alumno_new = new Alumno("1256949", "GIMENEZ", "Juan Manuel", LocalDate.of(1985, 1, 15));
         Alumno alumno_db = new Alumno();
         // insert base datos nuevo alumno
         alumno_data.insertAlumno(alumno_new);
@@ -109,6 +109,15 @@ public class Universidad_2 {
             System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
         }
         System.out.println("*********************************************");
+
+// Test calificar alumno
+        // Se debe reincribir para calificar
+        inscripcion_data.insertInscripcion(alumno_db, materia);
+        System.out.println("");
+        System.out.println("ITEM 4 calificar alumno");
+        System.out.println("Se implento 2 esquemas diferentes: guardanotamas lata, guarda ultima nota");
+        inscripcion_data.updateNota(alumno_db, materia, 8.5);
+        System.out.println("Nota alumno" + inscripcion_data.verificaNotaAlumno(alumno_db, materia));
 
 // Test  modificacion fecha nacimiento y estado alumnos se utiliza unsolo metodo UPDATE que actualizar cualqueir cambio en base al id_alumno, debera devolver error cuando dni duplicado
         System.out.println("Test modificacion fecha nacimiento y estado");
