@@ -26,6 +26,7 @@ public class Home extends javax.swing.JFrame {
 
     public Home() throws IOException, SQLException {
         initComponents();
+<<<<<<< HEAD
         this.setTitle("Sistema Gestion Grupo 15");
         this.setLocationRelativeTo(null);
         Conexion.getConnection();
@@ -35,6 +36,12 @@ public class Home extends javax.swing.JFrame {
                 + "<div style='text-align: center;'><h4>Conectar a base datos</h4></div>"
                 + "</html>";
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+=======
+        this.setTitle("Grupo 15 ULP");
+        this.setLocationRelativeTo(null);
+        JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
+        Conexion.getConnection();
+>>>>>>> main
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad_2/img/graduacion.png")); // linea para accerder al recurso
         this.setIconImage(icono); //linea para setear un icono al programa
         agregarColumnas();
@@ -81,32 +88,6 @@ public class Home extends javax.swing.JFrame {
         setResizable(false);
 
         tablaAlumnos.setAutoCreateRowSorter(true);
-        tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "DNI", "Apellido", "Nombre", "Fecha de nacimiento"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         tablaAlumnos.setToolTipText("");
         tablaAlumnos.setOpaque(false);
         jScrollPane1.setViewportView(tablaAlumnos);
@@ -171,7 +152,7 @@ public class Home extends javax.swing.JFrame {
         Titulo.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Titulo.setText("Sistema de Gestión");
-        Titulo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3), "Universidad de La Punta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", 2, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        Titulo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3), "Universidad de La Punta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", 2, 14))); // NOI18N
 
         jDesktopPane2.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(Titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -226,7 +207,8 @@ public class Home extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -290,14 +272,23 @@ public class Home extends javax.swing.JFrame {
     public void agregarColumnas() throws IOException, SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         AlumnoData alumno = new AlumnoData();
+        ArrayList<Alumno> alumnos = new ArrayList();
         tablaAlumnos.setModel(modelo);
+<<<<<<< HEAD
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
             alumnos = alumno.selectAlumnosTodos(true);
+=======
+        try {
+>>>>>>> main
             modelo.addColumn("DNI");
             modelo.addColumn("Nombres");
             modelo.addColumn("Apellido");
             modelo.addColumn("Fecha de Nacimiento");
+<<<<<<< HEAD
+=======
+            alumnos = alumno.selectAlumnos(0);// si colocas 0  tendras todoslos alumnos
+>>>>>>> main
             for (Alumno alumno1 : alumnos) {
                 modelo.addRow(new Object[]{alumno1.getDni(), alumno1.getNombre(), alumno1.getApellido().toUpperCase(), alumno1.getFecha_nacimiento()});
             }

@@ -96,7 +96,41 @@ public class AlumnoData {
         this.estado = estado;
     }
 
-    // busco todos los alumnos
+    // select  todos los alumnos activos
+    public ArrayList<Alumno> selectAlumnos(int estado) throws IOException, SQLException {
+        ArrayList<Alumno> alumnos = new ArrayList();
+        try {
+            String consulta;
+            if (estado == 1) {
+                consulta = "SELECT * from alumno WHERE `estado` = 1 ORDER BY `apellido`;";
+            } else {
+                consulta = "SELECT * from alumno WHERE 1 ORDER BY `apellido`;";
+            }
+
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            ResultSet result = stmt.executeQuery();
+            if (result == null) {
+                System.out.println("No se puedo encontrar alumnos");
+            } else {
+                System.out.println("Alumnos encontrados ");
+            }
+            while (result.next()) {
+                Alumno alumno = new Alumno();
+                alumno.setId_alumno(result.getInt("id_alumno"));
+                alumno.setDni(result.getString("dni"));
+                alumno.setApellido(result.getString("apellido"));
+                alumno.setNombre(result.getString("nombre"));
+                alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
+                alumno.setEstado(result.getBoolean("estado"));
+                alumnos.add(alumno);
+            }
+            result.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return alumnos;
+    }
+
     // busco alumno x dni instancio alumno
     public Alumno selectAlumnoDni(String dni) throws IOException {
         Alumno alumno = new Alumno();
