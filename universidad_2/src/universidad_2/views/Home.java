@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -25,7 +27,7 @@ import universidad_2.models.Alumno;
  */
 public class Home extends javax.swing.JFrame {
 
-    public Home() throws IOException {
+    public Home() throws IOException, SQLException {
         initComponents();
         this.setTitle("Home");
         this.setLocationRelativeTo(null);
@@ -33,7 +35,7 @@ public class Home extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"Bienvenido al sistema de gestion\n Accediendo a los datos");
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad_2/img/graduacion.png")); // linea para accerder al recurso 
         this.setIconImage(icono); //linea para setear un icono al programa
-//        agregarColumnas();
+        agregarColumnas();
     }
 
     /**
@@ -45,12 +47,16 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane4 = new javax.swing.JDesktopPane();
+        jDesktopPane2 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaAlumnos = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaMaterias = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
         Titulo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAlumnos = new javax.swing.JMenu();
@@ -58,48 +64,135 @@ public class Home extends javax.swing.JFrame {
         MenuMaterias = new javax.swing.JMenu();
         MenuIncripcion = new javax.swing.JMenu();
 
+        javax.swing.GroupLayout jDesktopPane4Layout = new javax.swing.GroupLayout(jDesktopPane4);
+        jDesktopPane4.setLayout(jDesktopPane4Layout);
+        jDesktopPane4Layout.setHorizontalGroup(
+            jDesktopPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane4Layout.setVerticalGroup(
+            jDesktopPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setName("Home"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel1.setToolTipText("");
+        tablaAlumnos.setAutoCreateRowSorter(true);
+        tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "DNI", "Apellido", "Nombre", "Fecha de nacimiento"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
 
-        jInternalFrame1.setVisible(true);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jTabbedPane1.addTab("Alumnos", jTabbedPane2);
-        jTabbedPane1.addTab("Materias", jTabbedPane3);
-        jTabbedPane1.addTab("Inscripcion", jTabbedPane4);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaAlumnos.setToolTipText("");
+        tablaAlumnos.setOpaque(false);
+        jScrollPane1.setViewportView(tablaAlumnos);
 
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
-        );
+        jTabbedPane1.addTab("Ver todos los Alumnos", jScrollPane1);
+
+        tablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nombre", "Año de cursada", "Esatdo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tablaMaterias);
+
+        jTabbedPane1.addTab("Ver todas las Materias", jScrollPane3);
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable3);
+
+        jTabbedPane1.addTab("Inscripciones", jScrollPane2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jInternalFrame1)
+            .addComponent(jTabbedPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
         );
 
         Titulo.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Titulo.setText("Sistema de Gestión");
         Titulo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3), "Universidad de La Punta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", 2, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        jDesktopPane2.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(Titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
+        jDesktopPane2.setLayout(jDesktopPane2Layout);
+        jDesktopPane2Layout.setHorizontalGroup(
+            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jDesktopPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(410, Short.MAX_VALUE))
+        );
+        jDesktopPane2Layout.setVerticalGroup(
+            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane2Layout.createSequentialGroup()
+                .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         MenuAlumnos.setText("Alumnos");
 
@@ -120,18 +213,11 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 1170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+            .addComponent(jDesktopPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jDesktopPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -170,6 +256,8 @@ public class Home extends javax.swing.JFrame {
                 new Home().setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -179,51 +267,64 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu MenuIncripcion;
     private javax.swing.JMenu MenuMaterias;
     private javax.swing.JLabel Titulo;
-    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JDesktopPane jDesktopPane4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable tablaAlumnos;
+    private javax.swing.JTable tablaMaterias;
     // End of variables declaration//GEN-END:variables
 
-//public void agregarColumnas() throws IOException {
-//    DefaultTableModel modelo = new DefaultTableModel();
-//    AlumnoData alumno = new AlumnoData();
-//    tablaAlumnos.setModel(modelo);
-//       alumno.buscarAlumnoPorDni(); //4369046
-//        // String Sql = "SELECT nombres,apellido,dni,domicilio,celular,email,fecha FROM personas " + filtro();
-//        //System.out.println(Sql); LINEA PARA DEBUGGEAR
-//        // ps = conn.prepareStatement(Sql);
-//        //  rs = ps.executeQuery();
-//        //ResultSetMetaData rsMd = rs.getMetaData();
-//        // int cantColumnas = rsMd.getColumnCount();//contar columnas y agregarlas a una variable entera
-//  
-//    modelo.addColumn("Nombres");
-//    modelo.addColumn("Apellido");
-//    modelo.addColumn("DNI");
-//    modelo.addColumn("Fecha de Nacimiento");
-//  
-//    /**
-//     * setear anchos de columnas con codigo
-//     */
-////            int[] anchos = {70, 70, 30, 50,};
-////            for (int i = 0; i < cantColumnas; i++) {
-////                tablaAlumnos.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-////            }
-//
-////            while (rs.next()) {
-////                Object[] filas = new Object[cantColumnas];
-////                for (int i = 0; i < cantColumnas; i++) {
-////                    filas[i] = rs.getObject(i + 1);
-////                }
-////                modelo.addRow(filas);
-////    }
-//    }
+    /**
+     *Metodo que agrega las columnas traidas desde la bd
+     * @throws IOException
+     */
+    public void agregarColumnas() throws IOException, SQLException {
+        //Conexion.getConnection();
+        DefaultTableModel modelo = new DefaultTableModel();
+        AlumnoData alumno = new AlumnoData();
+        tablaAlumnos.setModel(modelo);
+        //alumno.selectAlumnosMateria(1); //4369046
 
+        try {
+            String Sql = "SELECT dni,nombre,apellido,fecha_nacimiento FROM alumno WHERE estado = 1";// + filtro();
+        System.out.println(Sql); //LINEA PARA DEBUGGEAR
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection conn = Conexion.getConnection();
+            ps = conn.prepareStatement(Sql);
+            rs = ps.executeQuery();
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int cantColumnas = rsMd.getColumnCount();//contar columnas y agregarlas a una variable entera
+            modelo.addColumn("DNI");
+            modelo.addColumn("Nombres");
+            modelo.addColumn("Apellido");
+            modelo.addColumn("Fecha de Nacimiento");
 
+            /**
+             * setear anchos de columnas con codigo
+             */
+//            int[] anchos = {70, 70, 30, 50,};
+//            for (int i = 0; i < cantColumnas; i++) {
+//                tablaAlumnos.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+//            }
+            while (rs.next()) {
+                Object[] filas = new Object[cantColumnas];
+                for (int i = 0; i < cantColumnas; i++) {
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+            }catch (IOException | SQLException e) {
+                    System.out.println("Error: "+e.getMessage());
+        
+    }
+        }
 
-
-}
+    }

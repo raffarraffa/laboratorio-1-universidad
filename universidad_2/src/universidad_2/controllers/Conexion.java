@@ -60,7 +60,7 @@ public class Conexion {
      * @throws RuntimeException
      * @throws IOException
      */
-    public static void getConfigCSV(String[] args) throws RuntimeException, IOException {
+    private static void getConfigCSV(String[] args) throws RuntimeException, IOException {
         File archivo = new File(args[0]);
         BufferedReader lineas = null;
         try {
