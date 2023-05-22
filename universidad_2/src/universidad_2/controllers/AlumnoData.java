@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import universidad_2.models.Alumno;
+import universidad_2.models.Materia;
 
 /**
  *
@@ -124,17 +125,17 @@ public class AlumnoData {
         return alumno;
     }
 
-    public ArrayList<Alumno> selectAlumnosMateria(int id_materia) throws IOException, SQLException { // selecciona materias de un alumno
+    public ArrayList<Alumno> selectAlumnosMateria(Materia materia) throws IOException, SQLException {
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
             String consulta = "SELECT * from alumno WHERE id_alumno IN (SELECT id_alumno FROM `inscripcion` WHERE `id_materia` = (SELECT id_materia FROM materia WHERE id_materia = ?) );";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            stmt.setInt(1, id_materia);
+            stmt.setInt(1, materia.getId_materia());
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("mierda");
             } else {
-                System.out.println("ok");
+                System.out.println("-- ok --");
             }
             while (result.next()) {
                 Alumno alumno = new Alumno();

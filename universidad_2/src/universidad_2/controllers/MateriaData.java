@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import universidad_2.models.Alumno;
 import universidad_2.models.Materia;
 
 /**
@@ -39,18 +40,18 @@ public class MateriaData {
         this.estado = estado;
     }
 
-    // selecciona materias de un alumno recibe id alumnopor parametro
-    public ArrayList<Materia> selectMaterias(int id_alumno) throws IOException, SQLException {
+    // selecciona materias de un alumno recibe  alumno por parametro
+    public ArrayList<Materia> selectMaterias(Alumno alumno) throws IOException, SQLException {
         ArrayList<Materia> materias = new ArrayList();
         try {
             String consulta = "SELECT * from materia WHERE id_materia IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            stmt.setInt(1, id_alumno);
+            stmt.setInt(1, alumno.getId_alumno());
             ResultSet result = stmt.executeQuery();
-            if (result == null) {
-                System.out.println("mierda");
+            if (result.getRow() == 0) {
+                System.out.println(" -- No se encontraron materias para el alumno solcitado--");
             } else {
-                System.out.println("ok");
+                System.out.println("-- ok --");
             }
             while (result.next()) {
                 Materia materia = new Materia();

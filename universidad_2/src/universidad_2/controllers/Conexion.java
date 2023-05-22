@@ -40,7 +40,7 @@ public class Conexion {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(url, user, pass);
                 System.out.println("Nueva conexion exitosa!");
-                System.out.println("***********************");
+                System.out.print("***********************");
 
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("Fallo " + e);
@@ -69,6 +69,7 @@ public class Conexion {
             lineas = new BufferedReader(archivo_leido);
             String linea;
             while ((linea = lineas.readLine()) != null) {
+                System.out.println(linea);
                 String[] linea_procesada = linea.split(args[2]);
                 Conexion.user = linea_procesada[0];
                 Conexion.pass = linea_procesada[1];

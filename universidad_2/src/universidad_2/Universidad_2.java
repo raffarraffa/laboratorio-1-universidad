@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import universidad_2.controllers.AlumnoData;
@@ -19,111 +20,110 @@ import universidad_2.models.Materia;
  * @author raffarraffa
  */
 public class Universidad_2 {
-<<<<<<< Updated upstream
-//
-//    public static void main(String[] args) throws IOException, SQLException {
-//// Test conexion
-//        System.out.print("Estableciendo primer conexion: ");
-//        Conexion.getConnection();
-//        System.out.println("******************************");
-//// Instancias DATA
-//        MateriaData materia_data = new MateriaData();
-//        AlumnoData alumno_data = new AlumnoData();
-//        InscripcionData inscripcion_data = new InscripcionData();
-//
-//// Instancias clases
-//        Materia materia = new Materia();
-//        Alumno alumno = new Alumno();
-//
-//// Test materia SELECT nombre -> Ingles
-//        System.out.println("Test seleccion materia INGLES");
-//        materia = materia_data.selectMateria("Ingles");
-//        System.out.println("Materia seleccionada: " + materia.toString());
-//        System.out.println("*********************************************");
-//// Test alumno SELECT dni
-//        System.out.println("Test selecion alumno con dni 43690464");
-//        alumno = alumno_data.selectAlumnoDni("43690464");
-//        System.out.println("Alumno seleccionado : " + alumno.toString());
-//        System.out.println("*********************************************");
-//
-//// Test  modificacion fecha nacimiento y estado alumnos
-//        System.out.println("Test modificacion fecha nacimiento y estado");
-//        alumno.setFecha_nacimiento(LocalDate.now());
-//        alumno.setEstado(false);
-//        alumno_data.udateAlumno(alumno);
-//        System.out.println(alumno.toString());
-//        System.out.println("--------------------------------------");
-//        alumno.setFecha_nacimiento(LocalDate.of(1999, 5, 15));
-//        alumno.setEstado(true);
-//        System.out.println(alumno_data.udateAlumno(alumno));
-//        System.out.println(alumno.toString());
-//
-=======
 
-   // public static void main(String[] args) throws IOException, SQLException {
-//        Conexion.getConnection(); // llama conexion
-//        // instancias DATA
-//        MateriaData materia_data = new MateriaData();
-//        // MateriaData data_materia = new MateriaData();
-//        AlumnoData alumno_data = new AlumnoData();
+    public static void main(String[] args) throws IOException, SQLException {
+
+// Conexion, patron SINGLETON
+        System.out.print("Estableciendo primer conexion: ");
+        Conexion.getConnection();
+        System.out.println("******************************");
+// instancias de clases controllers DATA
+        MateriaData materia_data = new MateriaData();
+        AlumnoData alumno_data = new AlumnoData();
+        InscripcionData inscripcion_data = new InscripcionData();
+
+// instancias de clases MODELS
+        Materia materia = new Materia();
+        Materia materia_new = new Materia();
+        Alumno alumno = new Alumno();
+
+// variables locales
+        ArrayList<Alumno> alumnos = new ArrayList();
+        ArrayList<Materia> materias = new ArrayList();
 //
-//        Materia materia = new Materia();
-//        materia = materia_data.selectMateria("Ingles");
+// Test debug (deberian ir en Test Packages)
 //
-//        Alumno alumno = new Alumno();
-//        alumno = alumno_data.selectAlumnoDni("43690464");
-//
-////        alumno.setFecha_nacimiento(LocalDate.parse("1969-01-25", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-//        alumno.setFecha_nacimiento(LocalDate.of(1999, 5, 15));
-//        alumno.setEstado(false);
-//        System.out.println(alumno_data.udateAlumno(alumno));
-//
-//        InscripcionData inscripcion_materia = new InscripcionData();
->>>>>>> Stashed changes
-//        // alta inscripcion
-//        //inscripcion_materia.insertInscripcion(alumno, materia);
-//        // borrar inscripcion
-//        //inscripcion_materia.deleteInscripcion(alumno, materia);
-//        // UPDATE NOTA
-<<<<<<< Updated upstream
-//        inscripcion_data.updateNota(alumno, materia, 9.99);
-=======
-//        inscripcion_materia.updateNota(alumno, materia, 9.99);
->>>>>>> Stashed changes
-//        ArrayList<Materia> datos_materia = materia_data.selectMaterias(1);
-//        for (Materia mat : datos_materia) {
-//            System.out.println(mat.toString());
-//        }
-//        // consulta alumnos inscriptos  en una materia
-//        //  AlumnoData data_alumno = new AlumnoData();
-//
-//        ArrayList<Alumno> datos_alumnos = alumno_data.selectAlumnosMateria(1);
-//        for (Alumno alu : datos_alumnos) {
-//            System.out.println(alu.toString());
-//        }
-//        System.out.println(alumno);
-////        System.out.println(alumno.toString());
-//// CRUD
-////public Alumno(String dni, String apellido, String nombre, LocalDate fecha_nacimiento, boolean estado)
-//        Alumno alu_nuevo = new Alumno("12345678", "PEREZ", "Jose", LocalDate.of(1999, 5, 15));
-//        //  System.out.println(alumno_data.insertAlumno(alu_nuevo));
-//
-//        // nueva materia
-////        Materia mat_nueva = new Materia("WEB I", 1);
-//        Materia mat_nueva = new Materia();
-//
-//        mat_nueva = materia_data.selectMateria("WEB II");
-//        mat_nueva.setAnio(2);
-//        mat_nueva.setEstado(true);
-//        mat_nueva.setNombre("WEB I");
-//
-//        // System.out.println(mat_nueva.isEstado());
-////        materia_data.insertMateria(mat_nueva);
-//        materia_data.updateMateria(mat_nueva); // actualizar materia
-<<<<<<< Updated upstream
-//    }
-=======
-  // }
->>>>>>> Stashed changes
+
+// Test alumno SELECT usando dni -> debe enviarse un dni, devolvera el alumno
+        System.out.println("Test selecion alumno con dni 43690464");
+        alumno = alumno_data.selectAlumnoDni("43690464");
+        System.out.println("Alumno seleccionado : " + alumno.toString());
+        System.out.println("*********************************************");
+
+// Test  materias inscripcion  para un alumno
+        System.out.println("");
+        System.out.println("ITEM 1: permitir listar materias de un alumno");
+        System.out.println("Test listado materias para el alumno instanciado");
+        materias = materia_data.selectMaterias(alumno);
+        for (Materia materia1 : materias) {
+            System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
+        }
+        System.out.println("*********************************************");
+
+// Test materia SELECT nombre -> Ingles debe enviarse el nombre de la materia
+        System.out.println("Test seleccion materia INGLES");
+        materia = materia_data.selectMateria("Ingles");
+        System.out.println("Materia seleccionada: " + materia.toString());
+        System.out.println("*********************************************");
+
+// Test listado alumnos en una materia (ingles)
+        System.out.println("");
+        System.out.println("ITEM 2: permitir listar alumnos para una materia");
+        System.out.println("Test seleccion alumnos para una materia");
+        alumnos = alumno_data.selectAlumnosMateria(materia);
+        System.out.println(materia.getNombre() + ", " + materia.getAnio());
+        for (Alumno alumno1 : alumnos) {
+            System.out.println(alumno1.getApellido());
+        }
+        System.out.println("*********************************************");
+
+// Test inscribir alumno
+        // instancia nuevo alumno
+        System.out.println("");
+        System.out.println("ITEM 5 se carga neuvo alumno a los efectos poder asignarle una materia");
+        Alumno alumno_new = new Alumno("1256989", "GOMEZ", "Juan Manuel", LocalDate.of(1985, 1, 15));
+        Alumno alumno_db = new Alumno();
+        // insert base datos nuevo alumno
+        alumno_data.insertAlumno(alumno_new);
+        // verificacion alumno isnertado db
+        alumno_db = alumno_data.selectAlumnoDni(alumno_new.getDni());
+        System.out.println(alumno_db.getApellido());
+        System.out.println("");
+        System.out.println("ITEM 3 se incribe  nuevo alumno en ingles");
+        // se incribie alumno en materia ingles
+        inscripcion_data.insertInscripcion(alumno_db, materia);
+        // se verifica materias alumno nuevo
+        materias = materia_data.selectMaterias(alumno_db);
+        for (Materia materia1 : materias) {
+            System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
+        }
+        System.out.println("*********************************************");
+// Test desinscribir alumno
+        System.out.println("");
+        System.out.println("ITEM 3 se desincribe nuevo alumno de ingles");
+        // se borra alumno en materia ingles
+        inscripcion_data.deleteInscripcion(alumno_db, materia);
+        // se verifica materias alumno nuevo
+        materias = materia_data.selectMaterias(alumno_db);
+        for (Materia materia1 : materias) {
+            System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
+        }
+        System.out.println("*********************************************");
+
+// Test  modificacion fecha nacimiento y estado alumnos se utiliza unsolo metodo UPDATE que actualizar cualqueir cambio en base al id_alumno, debera devolver error cuando dni duplicado
+        System.out.println("Test modificacion fecha nacimiento y estado");
+        // se cambia fecha nacimiento, estado y se verifica cambio en 2 ocasiones
+        alumno.setFecha_nacimiento(LocalDate.now());
+        alumno.setEstado(false);
+//              alumno.setDni("8898888"); // si se intenta ingresar un dni existente arroja exepcion
+        alumno_data.udateAlumno(alumno);
+        System.out.println(alumno.toString());
+        System.out.println("--------------------------------------");
+        alumno.setFecha_nacimiento(LocalDate.of(1999, 5, 15));
+        alumno.setEstado(true);
+        alumno_data.udateAlumno(alumno);
+        System.out.println(alumno.toString());
+        System.out.println("*********************************************");
+
+    }
 }
-    
