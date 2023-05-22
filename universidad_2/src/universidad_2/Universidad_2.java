@@ -22,9 +22,9 @@ import universidad_2.models.Materia;
  * @author raffarraffa
  */
 public class Universidad_2 {
-
-  //  public static void main(String[] args) throws IOException, SQLException {
-        /*
+/*
+  public static void main(String[] args) throws IOException, SQLException {
+        
 // Conexion, patron SINGLETON
         System.out.print("Estableciendo primer conexion: ");
         Conexion.getConnection();
