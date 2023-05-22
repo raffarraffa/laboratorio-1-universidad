@@ -22,11 +22,13 @@ public class Conexion {
 
     private Conexion() {
     }
-/**
- * metodo para conectase a la base de datos
- * @return
- * @throws IOException 
- */
+
+    /**
+     * metodo para conectase a la base de datos
+     *
+     * @return
+     * @throws IOException
+     */
     public static Connection getConnection() throws IOException {
         String[] arguments = {"src\\config.csv", "false", ","};// patch, bandera 1º linea no valida, separador datos
 
@@ -37,22 +39,26 @@ public class Conexion {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(url, user, pass);
-                System.out.println("Conectado exitosamente!");
+                System.out.println("Nueva conexion exitosa!");
+                System.out.print("***********************");
 
             } catch (ClassNotFoundException | SQLException e) {
-                System.out.println("mierda" + e);
+                System.out.println("Fallo " + e);
 
             }
         } else {
-            System.out.println("Ya esta");
+            System.out.println("Utilizando Conexion existente! ");
+            // System.out.println("*******************************");
         }
         return connection;
     }
+
     /**
      * Metodo que lee un archivo csv para extraer las credenciales para acceder a la base de datos en remoto
+     *
      * @param args
      * @throws RuntimeException
-     * @throws IOException 
+     * @throws IOException
      */
     public static void getConfigCSV(String[] args) throws RuntimeException, IOException {
         File archivo = new File(args[0]);

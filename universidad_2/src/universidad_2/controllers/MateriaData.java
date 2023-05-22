@@ -70,15 +70,16 @@ public class MateriaData {
     public Materia selectMateria(String nombre) throws IOException {
         Materia materia = new Materia();
         try {
+
+            System.out.println("Metodo \"selectMateria(nombre)\" ");
             String consulta = "SELECT * from materia WHERE nombre like ? ;";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, nombre);
             ResultSet result = stmt.executeQuery();
-            System.out.println("dsfgh");
             if (result == null) {
-                System.out.println("mierda");
+                System.out.println("Resultado consulta NULL ");
             } else {
-                System.out.println("ok");
+                System.out.println("Resultado consulta OK ");
             }
             if (result.next()) {
                 materia.setId_materia(result.getInt("id_materia"));
