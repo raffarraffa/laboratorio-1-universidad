@@ -22,9 +22,9 @@ import universidad_2.models.Materia;
  * @author raffarraffa
  */
 public class Universidad_2 {
-/*
-  public static void main(String[] args) throws IOException, SQLException {
-        
+    /*
+    public static void main(String[] args) throws IOException, SQLException {
+
 // Conexion, patron SINGLETON
         System.out.print("Estableciendo primer conexion: ");
         Conexion.getConnection();
@@ -159,6 +159,12 @@ public class Universidad_2 {
         materia = materia_data.selectMateria("Ingles");
         System.out.println("Materia seleccionada: " + materia.toString());
         System.out.println("*********************************************");
-         */
-   // }
+// solictud materias todas
+        materias = materia_data.selectMaterias(1);
+        for (Materia materia1 : materias) {
+            System.out.println(materia1.toString());
+        }
+
+    }
+     */
 }

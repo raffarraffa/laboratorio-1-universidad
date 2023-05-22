@@ -145,5 +145,37 @@ public class MateriaData {
         return result;
     }
 
+    public ArrayList<Materia> selectMaterias(int estado) throws IOException, SQLException {
+        ArrayList<Materia> materias = new ArrayList();
+        try {
+            String consulta;
+            if (estado == 1) {
+                consulta = "SELECT * from materia WHERE `estado` = 1 ORDER BY `nombre` ;";
+            } else {
+                consulta = "SELECT * from materia WHERE 1 ORDER BY `nombre`;";
+            }
+
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            ResultSet result = stmt.executeQuery();
+            if (result == null) {
+                System.out.println("No se puedo encontrar materias");
+            } else {
+                System.out.println("Materias encontradas ");
+            }
+            while (result.next()) {
+                Materia materia = new Materia();
+                materia.setId_materia(result.getInt("id_materia"));
+                materia.setNombre(result.getString("nombre"));
+                materia.setAnio(result.getInt("anio"));
+                materia.setEstado(result.getBoolean("estado"));
+                materias.add(materia);
+            }
+            result.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return materias;
+    }
+
     // Premitir al personal administrativo listar los alumnos inscriptos en una materia
 }
