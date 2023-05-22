@@ -19,6 +19,7 @@ import universidad_2.models.Materia;
  * @author raffarraffa
  */
 public class Universidad_2 {
+<<<<<<< Updated upstream
 //
 //    public static void main(String[] args) throws IOException, SQLException {
 //// Test conexion
@@ -57,12 +58,38 @@ public class Universidad_2 {
 //        System.out.println(alumno_data.udateAlumno(alumno));
 //        System.out.println(alumno.toString());
 //
+=======
+
+   // public static void main(String[] args) throws IOException, SQLException {
+//        Conexion.getConnection(); // llama conexion
+//        // instancias DATA
+//        MateriaData materia_data = new MateriaData();
+//        // MateriaData data_materia = new MateriaData();
+//        AlumnoData alumno_data = new AlumnoData();
+//
+//        Materia materia = new Materia();
+//        materia = materia_data.selectMateria("Ingles");
+//
+//        Alumno alumno = new Alumno();
+//        alumno = alumno_data.selectAlumnoDni("43690464");
+//
+////        alumno.setFecha_nacimiento(LocalDate.parse("1969-01-25", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        alumno.setFecha_nacimiento(LocalDate.of(1999, 5, 15));
+//        alumno.setEstado(false);
+//        System.out.println(alumno_data.udateAlumno(alumno));
+//
+//        InscripcionData inscripcion_materia = new InscripcionData();
+>>>>>>> Stashed changes
 //        // alta inscripcion
 //        //inscripcion_materia.insertInscripcion(alumno, materia);
 //        // borrar inscripcion
 //        //inscripcion_materia.deleteInscripcion(alumno, materia);
 //        // UPDATE NOTA
+<<<<<<< Updated upstream
 //        inscripcion_data.updateNota(alumno, materia, 9.99);
+=======
+//        inscripcion_materia.updateNota(alumno, materia, 9.99);
+>>>>>>> Stashed changes
 //        ArrayList<Materia> datos_materia = materia_data.selectMaterias(1);
 //        for (Materia mat : datos_materia) {
 //            System.out.println(mat.toString());
@@ -93,5 +120,10 @@ public class Universidad_2 {
 //        // System.out.println(mat_nueva.isEstado());
 ////        materia_data.insertMateria(mat_nueva);
 //        materia_data.updateMateria(mat_nueva); // actualizar materia
+<<<<<<< Updated upstream
 //    }
+=======
+  // }
+>>>>>>> Stashed changes
 }
+    
