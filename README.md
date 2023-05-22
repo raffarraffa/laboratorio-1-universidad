@@ -1,11 +1,17 @@
 <a name="readme-top"></a>
-
-[![Contributors][contributors-shield]][contributors-url]
 <br/>
-# laboratorio-1-universidad
 <div align="center">
-  <h1>Laboratorio I Equipo 15</h1>
+  <a href="https://github.com/raffarraffa/laboratorio-1-universidad">
+    <img src="https://github.com/raffarraffa/laboratorio-1-universidad/blob/main/universidad_2/ulp.png" alt="Logo" width="200" height="200">
+  </a>
+  <div>
+  <h1  align="center">Laboratorio I Equipo 15</h1>
 </div>
+ <div align="left">
+    
+  [![Contributors][contributors-shield]][contributors-url]
+  
+<div> 
 <div align="left">
   <ul><h3>Integrantes</h3>
     <li> Vallejos Tulian, Roberta Estefania</li>
@@ -14,6 +20,9 @@
     <li> Lopez, Enrique Rafael </li>
 </ul>
 </div>
+<p align="right">((<a href="#readme-top"> Regresar al comienzo </a>))</p>
 <!--enlaces-->
+
 [contributors-shield]: https://img.shields.io/badge/Contribuidores-11-orange?style=for-the-badge&logo=appveyor
+
 [contributors-url]: https://github.com/raffarraffa/laboratorio-1-universidad/graphs/contributors
