@@ -8,10 +8,6 @@ package universidad_2.views;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -30,10 +26,22 @@ public class Home extends javax.swing.JFrame {
 
     public Home() throws IOException, SQLException {
         initComponents();
+<<<<<<< HEAD
+        this.setTitle("Sistema Gestion Grupo 15");
+        this.setLocationRelativeTo(null);
+        Conexion.getConnection();
+        String titulo = "Grupo 15 C1";
+        String mensaje = "<html>"
+                + "<div style='text-align: center;'><h2>Sistema Gestion Alumnos</h2></div>"
+                + "<div style='text-align: center;'><h4>Conectar a base datos</h4></div>"
+                + "</html>";
+        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+=======
         this.setTitle("Grupo 15 ULP");
         this.setLocationRelativeTo(null);
         JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
         Conexion.getConnection();
+>>>>>>> main
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad_2/img/graduacion.png")); // linea para accerder al recurso
         this.setIconImage(icono); //linea para setear un icono al programa
         agregarColumnas();
@@ -259,18 +267,28 @@ public class Home extends javax.swing.JFrame {
      * Metodo que agrega las columnas traidas desde la bd
      *
      * @throws IOException
+     * @throws java.sql.SQLException
      */
     public void agregarColumnas() throws IOException, SQLException {
         DefaultTableModel modelo = new DefaultTableModel();
         AlumnoData alumno = new AlumnoData();
         ArrayList<Alumno> alumnos = new ArrayList();
         tablaAlumnos.setModel(modelo);
+<<<<<<< HEAD
+        ArrayList<Alumno> alumnos = new ArrayList();
         try {
+            alumnos = alumno.selectAlumnosTodos(true);
+=======
+        try {
+>>>>>>> main
             modelo.addColumn("DNI");
             modelo.addColumn("Nombres");
             modelo.addColumn("Apellido");
             modelo.addColumn("Fecha de Nacimiento");
+<<<<<<< HEAD
+=======
             alumnos = alumno.selectAlumnos(0);// si colocas 0  tendras todoslos alumnos
+>>>>>>> main
             for (Alumno alumno1 : alumnos) {
                 modelo.addRow(new Object[]{alumno1.getDni(), alumno1.getNombre(), alumno1.getApellido().toUpperCase(), alumno1.getFecha_nacimiento()});
             }

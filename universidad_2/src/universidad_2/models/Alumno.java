@@ -90,6 +90,6 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return id_alumno + ", " + dni + ", " + apellido + ", " + nombre;
+        return id_alumno + ", " + dni + ", " + apellido + ", " + nombre + ", " + estado + ", " + fecha_nacimiento;
     }
 }

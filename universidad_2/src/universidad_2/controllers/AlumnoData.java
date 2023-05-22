@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import universidad_2.models.Alumno;
+import universidad_2.models.Materia;
 
 /**
  *
@@ -137,6 +138,7 @@ public class AlumnoData {
             String consulta = "SELECT * from alumno WHERE dni like ? ;";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, dni);
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("Resultado consulta NULL ");
@@ -158,17 +160,18 @@ public class AlumnoData {
         return alumno;
     }
 
-    public ArrayList<Alumno> selectAlumnosMateria(int id_materia) throws IOException, SQLException { // selecciona materias de un alumno
+    public ArrayList<Alumno> selectAlumnosMateria(Materia materia) throws IOException, SQLException {
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
             String consulta = "SELECT * from alumno WHERE id_alumno IN (SELECT id_alumno FROM `inscripcion` WHERE `id_materia` = (SELECT id_materia FROM materia WHERE id_materia = ?) );";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            stmt.setInt(1, id_materia);
+            stmt.setInt(1, materia.getId_materia());
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("mierda");
             } else {
-                System.out.println("ok");
+                System.out.println("-- ok --");
             }
             while (result.next()) {
                 Alumno alumno = new Alumno();
@@ -199,6 +202,7 @@ public class AlumnoData {
             stmt.setDate(4, java.sql.Date.valueOf(alumno.getFecha_nacimiento()));
             stmt.setBoolean(5, alumno.isEstado());
             stmt.setInt(6, alumno.getId_alumno());
+            System.out.println(stmt);
             result = stmt.executeUpdate();
             System.out.println("Resultado sentencia " + result);
         } catch (SQLException e) {
@@ -222,6 +226,7 @@ public class AlumnoData {
             stmt.setString(2, alumno.getApellido());
             stmt.setString(3, alumno.getNombre());
             stmt.setDate(4, java.sql.Date.valueOf(alumno.getFecha_nacimiento()));
+            System.out.println(stmt);
             result = stmt.executeUpdate();
             System.out.println("Resultado sentencia " + result);
         } catch (SQLException e) {
@@ -242,11 +247,17 @@ public class AlumnoData {
     }
     // selecciona todos alumno
 
-    public ArrayList<Alumno> selectAlumnosTodos() throws IOException, SQLException {
+    public ArrayList<Alumno> selectAlumnosTodos(boolean estado) throws IOException, SQLException {
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
-            String consulta = "SELECT * from alumno WHERE estado = true ;";
+            String consulta;
+            if (estado) {
+                consulta = "SELECT * from alumno WHERE `estado` = 1  ORDER BY `apellido` ;";
+            } else {
+                consulta = "SELECT * from alumno WHERE 1 ORDER BY `apellido` ;";
+            }
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            System.out.println(stmt);
             ResultSet result = stmt.executeQuery();
             if (result == null) {
                 System.out.println("-- no se encontraron alumnos --");

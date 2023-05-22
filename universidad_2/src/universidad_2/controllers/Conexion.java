@@ -68,11 +68,20 @@ public class Conexion {
             archivo_leido = new FileReader(args[0]);
             lineas = new BufferedReader(archivo_leido);
             String linea;
-            while ((linea = lineas.readLine()) != null) {
+
+            while ((linea = lineas.readLine()) != null && user == null) {
+                System.out.println(linea);
+                if (linea.equals("localhost")) {
+                    linea = lineas.readLine();
+                } else {
+                    linea = lineas.readLine();
+                    linea = lineas.readLine();
+                }
                 String[] linea_procesada = linea.split(args[2]);
                 Conexion.user = linea_procesada[0];
                 Conexion.pass = linea_procesada[1];
                 Conexion.url = linea_procesada[2];
+                //break;
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
