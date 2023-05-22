@@ -23,7 +23,7 @@ import universidad_2.models.Materia;
  */
 public class Universidad_2 {
 
-    public static void main(String[] args) throws IOException, SQLException {
+  //  public static void main(String[] args) throws IOException, SQLException {
         /*
 // Conexion, patron SINGLETON
         System.out.print("Estableciendo primer conexion: ");
@@ -160,5 +160,5 @@ public class Universidad_2 {
         System.out.println("Materia seleccionada: " + materia.toString());
         System.out.println("*********************************************");
          */
-    }
+   // }
 }
