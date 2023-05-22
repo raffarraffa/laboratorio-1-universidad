@@ -208,10 +208,15 @@ public class AlumnoData {
     }
     // selecciona todos alumno
 
-    public ArrayList<Alumno> selectAlumnosTodos() throws IOException, SQLException {
+    public ArrayList<Alumno> selectAlumnosTodos(boolean estado) throws IOException, SQLException {
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
-            String consulta = "SELECT * from alumno WHERE estado = true ;";
+            String consulta;
+            if (estado) {
+                consulta = "SELECT * from alumno WHERE `estado` = 1  ORDER BY `apellido` ;";
+            } else {
+                consulta = "SELECT * from alumno WHERE 1 ORDER BY `apellido` ;";
+            }
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             ResultSet result = stmt.executeQuery();
             if (result == null) {

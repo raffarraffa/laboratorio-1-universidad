@@ -40,7 +40,7 @@ public class Conexion {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(url, user, pass);
                 System.out.println("Nueva conexion exitosa!");
-                System.out.print("***********************");
+                System.out.println("***********************");
 
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("Fallo " + e);
