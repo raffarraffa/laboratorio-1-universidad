@@ -3,20 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universidad_2.views;
+package universidad.views;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import universidad_2.controllers.AlumnoData;
-import universidad_2.controllers.Conexion;
-import universidad_2.models.Alumno;
+import universidad.controllers.AlumnoData;
+import universidad.controllers.Conexion;
+import universidad.controllers.InscripcionData;
+import universidad.models.Alumno;
 
 /**
  *
@@ -38,14 +46,15 @@ public class Home extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
         this.setTitle("Grupo 15 ULP");
         this.setLocationRelativeTo(null);
-       // JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
+        // JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
         Conexion.getConnection();
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad_2/img/graduacion.png")); // linea para accerder al recurso
         this.setTitle("Home");
-        this.setLocationRelativeTo(null);    
+        this.setLocationRelativeTo(null);
         this.setIconImage(icono); //linea para setear un icono al programa
         mostrarTodosAlumnos();
-       
+        mostrarTodasInscripciones();
+
     }
 
     /**
@@ -64,7 +73,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaMaterias = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tablaInscripciones = new javax.swing.JTable();
         Titulo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAlumnos = new javax.swing.JMenu();
@@ -89,8 +98,12 @@ public class Home extends javax.swing.JFrame {
         setResizable(false);
 
         tablaAlumnos.setAutoCreateRowSorter(true);
+        tablaAlumnos.setBackground(new java.awt.Color(255, 204, 153));
         tablaAlumnos.setToolTipText("");
+        tablaAlumnos.setColumnSelectionAllowed(true);
+        tablaAlumnos.setGridColor(new java.awt.Color(0, 204, 0));
         tablaAlumnos.setOpaque(false);
+        tablaAlumnos.setSelectionBackground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(tablaAlumnos);
 
         jTabbedPane1.addTab("Ver todos los Alumnos", jScrollPane1);
@@ -124,7 +137,7 @@ public class Home extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ver todas las Materias", jScrollPane3);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInscripciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -135,7 +148,7 @@ public class Home extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable3);
+        jScrollPane2.setViewportView(tablaInscripciones);
 
         jTabbedPane1.addTab("Inscripciones", jScrollPane2);
 
@@ -232,8 +245,8 @@ public class Home extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-    JOptionPane.showMessageDialog(null,"Bienvenido al sistema de gestion\n Accediendo a los datos");
-    Conexion.getConnection();
+        JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
+        Conexion.getConnection();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
@@ -260,8 +273,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable tablaAlumnos;
+    private javax.swing.JTable tablaInscripciones;
     private javax.swing.JTable tablaMaterias;
     // End of variables declaration//GEN-END:variables
 
@@ -280,13 +293,31 @@ public class Home extends javax.swing.JFrame {
         modelo.addColumn("Nombres");
         modelo.addColumn("Apellido");
         modelo.addColumn("Fecha de Nacimiento");
-
         alumnos = alumno.selectAlumnos(0);// si colocas 0  tendras todoslos alumnos
-
         for (Alumno alumno1 : alumnos) {
             modelo.addRow(new Object[]{alumno1.getDni(), alumno1.getNombre(), alumno1.getApellido().toUpperCase(), alumno1.getFecha_nacimiento()});
         }
     }
-    
-    
+
+    /**
+     * Metodo que agrega las columnas traidas desde la bd
+     *
+     * @throws IOException
+     * @throws java.sql.SQLException
+     */
+    public void mostrarTodasInscripciones() throws IOException, SQLException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        tablaInscripciones.setModel(modelo);
+        HashMap<String, ArrayList<String>> inscp = new HashMap<>();
+        modelo.addColumn("id");
+        modelo.addColumn("Alumno");
+        modelo.addColumn("Materias");
+        InscripcionData inscripcion = new InscripcionData();
+        inscp = inscripcion.selectInscriptos();
+        for (Map.Entry<String, ArrayList<String>> entry : inscp.entrySet()) {
+            String clave = entry.getKey();
+            ArrayList<String> data = entry.getValue();
+            modelo.addRow(new Object[]{entry.getKey(), data.get(0), data.get(1)});
+        }
+    }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universidad_2.controllers;
+package universidad.controllers;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import universidad_2.models.Alumno;
-import universidad_2.models.Materia;
+import universidad.models.Alumno;
+import universidad.models.Materia;
 
 /**
  *
@@ -26,7 +26,6 @@ public class AlumnoData {
     private String nombre;
     private LocalDate fecha_nacimiento;
     private boolean estado;
-    //private ArrayList<Materia> materias = new ArrayList();
 
     public AlumnoData() {
     }
@@ -98,6 +97,7 @@ public class AlumnoData {
 
     // select  todos los alumnos activos
     public ArrayList<Alumno> selectAlumnos(int estado) throws IOException, SQLException {
+        @SuppressWarnings("unchecked")
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
             String consulta;
@@ -108,23 +108,23 @@ public class AlumnoData {
             }
 
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            ResultSet result = stmt.executeQuery();
-            if (result == null) {
-                System.out.println("No se puedo encontrar alumnos");
-            } else {
-                System.out.println("Alumnos encontrados ");
+            try (ResultSet result = stmt.executeQuery()) {
+                if (result == null) {
+                    System.out.println("No se puedo encontrar alumnos");
+                } else {
+                    System.out.println("Alumnos encontrados ");
+                }
+                while (result.next()) {
+                    Alumno alumno = new Alumno();
+                    alumno.setId_alumno(result.getInt("id_alumno"));
+                    alumno.setDni(result.getString("dni"));
+                    alumno.setApellido(result.getString("apellido"));
+                    alumno.setNombre(result.getString("nombre"));
+                    alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
+                    alumno.setEstado(result.getBoolean("estado"));
+                    alumnos.add(alumno);
+                }
             }
-            while (result.next()) {
-                Alumno alumno = new Alumno();
-                alumno.setId_alumno(result.getInt("id_alumno"));
-                alumno.setDni(result.getString("dni"));
-                alumno.setApellido(result.getString("apellido"));
-                alumno.setNombre(result.getString("nombre"));
-                alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
-                alumno.setEstado(result.getBoolean("estado"));
-                alumnos.add(alumno);
-            }
-            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -139,21 +139,21 @@ public class AlumnoData {
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, dni);
             System.out.println(stmt);
-            ResultSet result = stmt.executeQuery();
-            if (result == null) {
-                System.out.println("Resultado consulta NULL ");
-            } else {
-                System.out.println("Resultado consulta OK ");
+            try (ResultSet result = stmt.executeQuery()) {
+                if (result == null) {
+                    System.out.println("Resultado consulta NULL ");
+                } else {
+                    System.out.println("Resultado consulta OK ");
+                }
+                if (result.next()) {
+                    alumno.setId_alumno(result.getInt("id_alumno"));
+                    alumno.setDni(result.getString("dni"));
+                    alumno.setApellido(result.getString("apellido"));
+                    alumno.setNombre(result.getString("nombre"));
+                    alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
+                    alumno.setEstado(result.getBoolean("estado"));
+                }
             }
-            if (result.next()) {
-                alumno.setId_alumno(result.getInt("id_alumno"));
-                alumno.setDni(result.getString("dni"));
-                alumno.setApellido(result.getString("apellido"));
-                alumno.setNombre(result.getString("nombre"));
-                alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
-                alumno.setEstado(result.getBoolean("estado"));
-            }
-            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -161,29 +161,30 @@ public class AlumnoData {
     }
 
     public ArrayList<Alumno> selectAlumnosMateria(Materia materia) throws IOException, SQLException {
+        @SuppressWarnings("unchecked")
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
             String consulta = "SELECT * from alumno WHERE id_alumno IN (SELECT id_alumno FROM `inscripcion` WHERE `id_materia` = (SELECT id_materia FROM materia WHERE id_materia = ?) );";
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setInt(1, materia.getId_materia());
             System.out.println(stmt);
-            ResultSet result = stmt.executeQuery();
-            if (result == null) {
-                System.out.println("mierda");
-            } else {
-                System.out.println("-- ok --");
+            try (ResultSet result = stmt.executeQuery()) {
+                if (result == null) {
+                    System.out.println("mierda");
+                } else {
+                    System.out.println("-- ok --");
+                }
+                while (result.next()) {
+                    Alumno alumno = new Alumno();
+                    alumno.setId_alumno(result.getInt("id_alumno"));
+                    alumno.setDni(result.getString("dni"));
+                    alumno.setApellido(result.getString("apellido"));
+                    alumno.setNombre(result.getString("nombre"));
+                    alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
+                    alumno.setEstado(result.getBoolean("estado"));
+                    alumnos.add(alumno);
+                }
             }
-            while (result.next()) {
-                Alumno alumno = new Alumno();
-                alumno.setId_alumno(result.getInt("id_alumno"));
-                alumno.setDni(result.getString("dni"));
-                alumno.setApellido(result.getString("apellido"));
-                alumno.setNombre(result.getString("nombre"));
-                alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
-                alumno.setEstado(result.getBoolean("estado"));
-                alumnos.add(alumno);
-            }
-            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -248,6 +249,7 @@ public class AlumnoData {
     // selecciona todos alumno
 
     public ArrayList<Alumno> selectAlumnosTodos(boolean estado) throws IOException, SQLException {
+        @SuppressWarnings("unchecked")
         ArrayList<Alumno> alumnos = new ArrayList();
         try {
             String consulta;
@@ -258,23 +260,23 @@ public class AlumnoData {
             }
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             System.out.println(stmt);
-            ResultSet result = stmt.executeQuery();
-            if (result == null) {
-                System.out.println("-- no se encontraron alumnos --");
-            } else {
-                System.out.println("-- ok --");
+            try (ResultSet result = stmt.executeQuery()) {
+                if (result == null) {
+                    System.out.println("-- no se encontraron alumnos --");
+                } else {
+                    System.out.println("-- ok --");
+                }
+                while (result.next()) {
+                    Alumno alumno = new Alumno();
+                    alumno.setId_alumno(result.getInt("id_alumno"));
+                    alumno.setDni(result.getString("dni"));
+                    alumno.setApellido(result.getString("apellido"));
+                    alumno.setNombre(result.getString("nombre"));
+                    alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
+                    alumno.setEstado(result.getBoolean("estado"));
+                    alumnos.add(alumno);
+                }
             }
-            while (result.next()) {
-                Alumno alumno = new Alumno();
-                alumno.setId_alumno(result.getInt("id_alumno"));
-                alumno.setDni(result.getString("dni"));
-                alumno.setApellido(result.getString("apellido"));
-                alumno.setNombre(result.getString("nombre"));
-                alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
-                alumno.setEstado(result.getBoolean("estado"));
-                alumnos.add(alumno);
-            }
-            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

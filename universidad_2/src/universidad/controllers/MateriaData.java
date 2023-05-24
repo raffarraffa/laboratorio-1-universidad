@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universidad_2.controllers;
+package universidad.controllers;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import universidad_2.models.Alumno;
-import universidad_2.models.Materia;
+import universidad.models.Alumno;
+import universidad.models.Materia;
 
 /**
  *
@@ -41,34 +41,6 @@ public class MateriaData {
     }
 
     // selecciona materias de un alumno recibe  alumno por parametro
-    public ArrayList<Materia> selectMaterias(Alumno alumno) throws IOException, SQLException {
-        ArrayList<Materia> materias = new ArrayList();
-        try {
-            String consulta = "SELECT * from materia WHERE id_materia IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
-            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            stmt.setInt(1, alumno.getId_alumno());
-            System.out.println(stmt);
-            ResultSet result = stmt.executeQuery();
-            if (result.getRow() == 0) {
-                System.out.println(" -- No se encontraron materias para el alumno solicitado--");
-            } else {
-                System.out.println("-- ok --");
-            }
-            while (result.next()) {
-                Materia materia = new Materia();
-                materia.setNombre(result.getString("nombre"));
-                materia.setAnio(result.getInt("anio"));
-                materia.setId_materia(result.getInt("id_materia"));
-                materia.setEstado(result.getBoolean("estado"));
-                materias.add(materia);
-            }
-            result.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return materias;
-    }
-
     public Materia selectMateria(String nombre) throws IOException {
         Materia materia = new Materia();
         try {

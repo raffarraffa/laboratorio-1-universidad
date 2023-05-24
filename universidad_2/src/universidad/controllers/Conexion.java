@@ -1,4 +1,4 @@
-package universidad_2.controllers;
+package universidad.controllers;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,16 +39,13 @@ public class Conexion {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(url, user, pass);
-                System.out.println("Nueva conexion exitosa!");
-                System.out.print("***********************");
-
+                System.out.println(" Nueva conexion exitosa!");
             } catch (ClassNotFoundException | SQLException e) {
-                System.out.println("Fallo " + e);
+                System.out.println(" Fallo " + e);
 
             }
         } else {
-            System.out.println("Utilizando Conexion existente! ");
-            // System.out.println("*******************************");
+            System.out.println(" Utilizando Conexion existente! ");
         }
         return connection;
     }
@@ -70,7 +67,7 @@ public class Conexion {
             String linea;
 
             while ((linea = lineas.readLine()) != null && user == null) {
-                System.out.println(linea);
+                System.out.print(linea);
                 if (linea.equals("localhost")) {
                     linea = lineas.readLine();
                 } else {

@@ -1,3 +1,3 @@
-//localhost
-root,,jdbc:mysql://localhost/rafalopez_tuds
-rafalopez_tuds,MalditaEDA,jdbc:mysql://mysql-rafalopez.alwaysdata.net/rafalopez_tuds
+localhost
+root,,jdbc:mysql://localhost/rafalopez_tuds?useLegacyDatetimeCode=false&serverTimezone=UTC
+rafalopez_tuds,MalditaEDA,jdbc:mysql://mysql-rafalopez.alwaysdata.net/rafalopez_tuds?useLegacyDatetimeCode=false&serverTimezone=UTC
