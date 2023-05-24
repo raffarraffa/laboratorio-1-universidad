@@ -36,7 +36,7 @@ public class InscripcionData {
             e.printStackTrace();
         }
         if (result == 1) {
-            System.out.println("Se realizo la inscripcion solictada");
+            System.out.println("Se realizo la inscripcion solicitada");
         } else {
             System.out.println("No se realizo la inscripcion solicitada");
         }
@@ -155,11 +155,24 @@ public class InscripcionData {
         return inscripciones;
     }
 
-    public ArrayList<Materia> selectMaterias(Alumno alumno) throws IOException, SQLException {
+    /**
+     *
+     * @param alumno
+     * @param inscripto materias inscripto
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
+    public ArrayList<Materia> selectMaterias(Alumno alumno, boolean inscripto) throws IOException, SQLException {
         @SuppressWarnings("unchecked")
         ArrayList<Materia> materias = new ArrayList();
         try {
-            String consulta = "SELECT * from materia WHERE id_materia IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
+            String consulta;
+            if (inscripto) {
+                consulta = "SELECT * from materia WHERE id_materia IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
+            } else {
+                consulta = "SELECT * from materia WHERE id_materia NOT IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
+            }
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setInt(1, alumno.getId_alumno());
             System.out.println(stmt);
