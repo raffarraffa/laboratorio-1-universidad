@@ -2,7 +2,7 @@
 <br/>
 <div align="center">
   <a href="https://github.com/raffarraffa/laboratorio-1-universidad">
-    <img src="https://github.com/raffarraffa/laboratorio-1-universidad/blob/main/universidad_2/ulp.png" alt="Logo" width="200" height="200">
+    <img src="https://github.com/raffarraffa/laboratorio-1-universidad/blob/main/ulp.png" alt="Logo" width="200" height="200">
   </a>
   <div>
   <h1  align="center">Laboratorio I Equipo 15</h1>
