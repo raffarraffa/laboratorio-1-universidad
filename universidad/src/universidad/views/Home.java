@@ -3,28 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universidad.views;
+package universidad_2.views;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import universidad.controllers.AlumnoData;
 import universidad.controllers.Conexion;
-import universidad.controllers.InscripcionData;
+import universidad.controllers.MateriaData;
 import universidad.models.Alumno;
+import universidad.models.Materia;
 
 /**
  *
@@ -32,10 +26,10 @@ import universidad.models.Alumno;
  */
 public class Home extends javax.swing.JFrame {
 
+    public static GestionarAlumno formAlumno;
+
     public Home() throws IOException, SQLException {
         initComponents();
-
-        this.setTitle("Sistema Gestion Grupo 15");
         this.setLocationRelativeTo(null);
         Conexion.getConnection();
         String titulo = "Grupo 15 C1";
@@ -44,16 +38,13 @@ public class Home extends javax.swing.JFrame {
                 + "<div style='text-align: center;'><h4>Conectar a base datos</h4></div>"
                 + "</html>";
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
-        this.setTitle("Grupo 15 ULP");
-        this.setLocationRelativeTo(null);
-        // JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
         Conexion.getConnection();
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad_2/img/graduacion.png")); // linea para accerder al recurso
         this.setTitle("Home");
-        this.setLocationRelativeTo(null);
         this.setIconImage(icono); //linea para setear un icono al programa
         mostrarTodosAlumnos();
-        mostrarTodasInscripciones();
+
+        mostrarTodasMaterias();
 
     }
 
@@ -68,12 +59,12 @@ public class Home extends javax.swing.JFrame {
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAlumnos = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaMaterias = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaInscripciones = new javax.swing.JTable();
+        jTable3 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaAlumnos = new javax.swing.JTable();
         Titulo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuAlumnos = new javax.swing.JMenu();
@@ -97,47 +88,21 @@ public class Home extends javax.swing.JFrame {
         setName("Home"); // NOI18N
         setResizable(false);
 
-        tablaAlumnos.setAutoCreateRowSorter(true);
-        tablaAlumnos.setBackground(new java.awt.Color(255, 204, 153));
-        tablaAlumnos.setToolTipText("");
-        tablaAlumnos.setColumnSelectionAllowed(true);
-        tablaAlumnos.setGridColor(new java.awt.Color(0, 204, 0));
-        tablaAlumnos.setOpaque(false);
-        tablaAlumnos.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setViewportView(tablaAlumnos);
-
-        jTabbedPane1.addTab("Ver todos los Alumnos", jScrollPane1);
-
+        tablaMaterias.setAutoCreateRowSorter(true);
         tablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {},
+                {}
             },
             new String [] {
-                "Nombre", "Año de cursada", "Esatdo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane3.setViewportView(tablaMaterias);
 
         jTabbedPane1.addTab("Ver todas las Materias", jScrollPane3);
 
-        tablaInscripciones.setModel(new javax.swing.table.DefaultTableModel(
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -148,9 +113,36 @@ public class Home extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tablaInscripciones);
+        jScrollPane2.setViewportView(jTable3);
 
         jTabbedPane1.addTab("Inscripciones", jScrollPane2);
+
+        tablaAlumnos.setAutoCreateRowSorter(true);
+        tablaAlumnos.setBackground(new java.awt.Color(204, 204, 204));
+        tablaAlumnos.setForeground(new java.awt.Color(0, 0, 0));
+        tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        tablaAlumnos.setToolTipText("");
+        tablaAlumnos.setCellSelectionEnabled(true);
+        tablaAlumnos.setGridColor(new java.awt.Color(102, 102, 102));
+        tablaAlumnos.setOpaque(false);
+        tablaAlumnos.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        tablaAlumnos.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        tablaAlumnos.getTableHeader().setReorderingAllowed(false);
+        tablaAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAlumnosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaAlumnos);
+
+        jTabbedPane1.addTab("Ver todos los Alumnos", jScrollPane1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,6 +184,11 @@ public class Home extends javax.swing.JFrame {
         MenuAlumnos.setText("Alumnos");
 
         jMenuItem4.setText("Gestionar Alumnos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         MenuAlumnos.add(jMenuItem4);
 
         jMenuBar1.add(MenuAlumnos);
@@ -218,11 +215,18 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) throws IOException {
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if (formAlumno == null) {
+            formAlumno = new GestionarAlumno();
+            formAlumno.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
+
+    }//GEN-LAST:event_tablaAlumnosMouseClicked
+
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -246,14 +250,11 @@ public class Home extends javax.swing.JFrame {
         }
         //</editor-fold>
         JOptionPane.showMessageDialog(null, "Bienvenido al sistema de gestion\n Accediendo a los datos");
-        Conexion.getConnection();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
                 new Home().setVisible(true);
-            } catch (IOException ex) {
-                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
+            } catch (IOException | SQLException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
@@ -273,51 +274,53 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTable tablaAlumnos;
-    private javax.swing.JTable tablaInscripciones;
     private javax.swing.JTable tablaMaterias;
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Metodo que agrega las columnas traidas desde la bd
+     * Asi se documenta perrs
      *
      * @throws IOException
-     * @throws java.sql.SQLException
+     * @throws SQLException
      */
-    public void mostrarTodosAlumnos() throws IOException, SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
+    public final void mostrarTodosAlumnos() throws IOException, SQLException {
+        DefaultTableModel modeloAlumno = new DefaultTableModel();
         AlumnoData alumno = new AlumnoData();
-        tablaAlumnos.setModel(modelo);
+        tablaAlumnos.setModel(modeloAlumno);
         ArrayList<Alumno> alumnos = alumno.selectAlumnosTodos(true);
-        modelo.addColumn("DNI");
-        modelo.addColumn("Nombres");
-        modelo.addColumn("Apellido");
-        modelo.addColumn("Fecha de Nacimiento");
+        modeloAlumno.addColumn("DNI");
+        modeloAlumno.addColumn("Nombres");
+        modeloAlumno.addColumn("Apellido");
+        modeloAlumno.addColumn("Fecha de Nacimiento");
         alumnos = alumno.selectAlumnos(0);// si colocas 0  tendras todoslos alumnos
         for (Alumno alumno1 : alumnos) {
-            modelo.addRow(new Object[]{alumno1.getDni(), alumno1.getNombre(), alumno1.getApellido().toUpperCase(), alumno1.getFecha_nacimiento()});
+            modeloAlumno.addRow(new Object[]{alumno1.getDni(), alumno1.getNombre(), alumno1.getApellido().toUpperCase(), alumno1.getFecha_nacimiento()});
         }
     }
 
     /**
-     * Metodo que agrega las columnas traidas desde la bd
      *
      * @throws IOException
-     * @throws java.sql.SQLException
+     * @throws SQLException
      */
-    public void mostrarTodasInscripciones() throws IOException, SQLException {
-        DefaultTableModel modelo = new DefaultTableModel();
-        tablaInscripciones.setModel(modelo);
-        HashMap<String, ArrayList<String>> inscp = new HashMap<>();
-        modelo.addColumn("id");
-        modelo.addColumn("Alumno");
-        modelo.addColumn("Materias");
-        InscripcionData inscripcion = new InscripcionData();
-        inscp = inscripcion.selectInscriptos();
-        for (Map.Entry<String, ArrayList<String>> entry : inscp.entrySet()) {
-            String clave = entry.getKey();
-            ArrayList<String> data = entry.getValue();
-            modelo.addRow(new Object[]{entry.getKey(), data.get(0), data.get(1)});
+    public final void mostrarTodasMaterias() throws IOException, SQLException {
+        DefaultTableModel modeloMateria = new DefaultTableModel();
+        MateriaData materia = new MateriaData();
+        ArrayList<Materia> materias = materia.selectMaterias(0);
+        modeloMateria.addColumn("Nombre");
+        modeloMateria.addColumn("Año en curso");
+        modeloMateria.addColumn("Estado");
+        for (Materia materia1 : materias) {
+            modeloMateria.addRow(new Object[]{materia1.getNombre(), materia1.getAnio(), materia1.isEstado()});
         }
+
+        tablaMaterias.setModel(modeloMateria);
+    }
+
+    public void mostrarTodasInscripciones() throws IOException, SQLException {
+        DefaultTableModel modeloInscripcion = new DefaultTableModel();
+
     }
 }
