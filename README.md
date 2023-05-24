@@ -7,13 +7,16 @@
   <div>
   <h1  align="center">Laboratorio I Equipo 15</h1>
 </div>
- <div align="left">
+ <div align="right">
     
   [![Contributors][contributors-shield]][contributors-url]
   
-<div> 
+</div> 
+  <div align="left">
+   <h2>Profesores  Luis Javier Mercado - Juan José Saez</h2>
+</div>
 <div align="left">
-  <ul><h3>Integrantes</h3>
+  <ul><h2>Integrantes</h2>
     <li> Vallejos Tulian, Roberta Estefania</li>
     <li> Villalobos, Ruben Cristian </li>
     <li> Toloza, Santiago Leonel </li>
