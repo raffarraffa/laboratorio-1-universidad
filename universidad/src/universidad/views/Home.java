@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package universidad_2.views;
+package universidad.views;
 
+import static com.sun.corba.se.impl.util.Utility.printStackTrace;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import universidad.controllers.Conexion;
 import universidad.controllers.MateriaData;
 import universidad.models.Alumno;
 import universidad.models.Materia;
+import universidad.views.GestionInscripcion;
 
 /**
  *
@@ -27,6 +29,7 @@ import universidad.models.Materia;
 public class Home extends javax.swing.JFrame {
 
     public static GestionarAlumno formAlumno;
+    public GestionInscripcion ins;
 
     public Home() throws IOException, SQLException {
         initComponents();
@@ -39,7 +42,7 @@ public class Home extends javax.swing.JFrame {
                 + "</html>";
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
         Conexion.getConnection();
-        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad_2/img/graduacion.png")); // linea para accerder al recurso
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/graduacion.png")); // linea para accerder al recurso
         this.setTitle("Home");
         this.setIconImage(icono); //linea para setear un icono al programa
         mostrarTodosAlumnos();
@@ -71,6 +74,7 @@ public class Home extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         MenuMaterias = new javax.swing.JMenu();
         MenuIncripcion = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jDesktopPane4Layout = new javax.swing.GroupLayout(jDesktopPane4);
         jDesktopPane4.setLayout(jDesktopPane4Layout);
@@ -119,7 +123,6 @@ public class Home extends javax.swing.JFrame {
 
         tablaAlumnos.setAutoCreateRowSorter(true);
         tablaAlumnos.setBackground(new java.awt.Color(204, 204, 204));
-        tablaAlumnos.setForeground(new java.awt.Color(0, 0, 0));
         tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -197,6 +200,15 @@ public class Home extends javax.swing.JFrame {
         jMenuBar1.add(MenuMaterias);
 
         MenuIncripcion.setText("Inscripcion");
+
+        jMenuItem1.setText("Gestion de Inscripciones");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuIncripcion.add(jMenuItem1);
+
         jMenuBar1.add(MenuIncripcion);
 
         setJMenuBar(jMenuBar1);
@@ -225,6 +237,15 @@ public class Home extends javax.swing.JFrame {
     private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
 
     }//GEN-LAST:event_tablaAlumnosMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+      
+        if (ins == null) {
+            ins = new GestionInscripcion();
+            ins.setVisible(true);
+        }
+            
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -268,6 +289,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JDesktopPane jDesktopPane4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

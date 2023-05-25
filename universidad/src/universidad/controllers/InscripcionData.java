@@ -46,7 +46,7 @@ public class InscripcionData {
     public int deleteInscripcion(Alumno alumno, Materia materia) throws IOException {
         int result = 0;
         try {
-            String consulta = "DELETE FROM inscripcion WHERE `inscripcion`.`id_alumno` = ? AND `id_materia`= ? AND `nota` IS NULL";
+            String consulta = "DELETE FROM inscripcion WHERE `inscripcion`.`id_alumno` = ? AND `id_materia`= ? ";//AND `nota` IS NULL
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setInt(1, alumno.getId_alumno());
             stmt.setInt(2, materia.getId_materia());
@@ -168,6 +168,35 @@ public class InscripcionData {
                     System.out.println(" -- No se encontraron materias para el alumno solicitado " + alumno.getApellido());
                 } else {
                     System.out.println("-- Mostrando materias para el alumno " + alumno.getApellido());
+                }
+                result.beforeFirst();
+                while (result.next()) {
+                    Materia materia = new Materia();
+                    materia.setNombre(result.getString("nombre"));
+                    materia.setAnio(result.getInt("anio"));
+                    materia.setId_materia(result.getInt("id_materia"));
+                    materia.setEstado(result.getBoolean("estado"));
+                    materias.add(materia);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return materias;
+    }
+    public ArrayList<Materia> materiasNoInscripto(Alumno alumno) throws IOException, SQLException {
+        @SuppressWarnings("unchecked")
+        ArrayList<Materia> materias = new ArrayList();
+        try {
+            String consulta = "SELECT * from materia WHERE id_materia NOT IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
+            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
+            stmt.setInt(1, alumno.getId_alumno());
+            System.out.println(stmt);
+            try (ResultSet result = stmt.executeQuery()) {
+                if (!result.next()) {
+                    System.out.println(" -- No se encontraron materias " + alumno.getApellido());
+                } else {
+                    System.out.println("-- Mostrando materias no inscriptas " + alumno.getApellido());
                 }
                 result.beforeFirst();
                 while (result.next()) {
