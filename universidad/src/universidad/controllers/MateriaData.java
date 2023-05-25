@@ -117,14 +117,28 @@ public class MateriaData {
         return result;
     }
 
+    /**
+     * estado: 0 no activas, 1 activas, 2 todas
+     *
+     * @param estado
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
     public ArrayList<Materia> selectMaterias(int estado) throws IOException, SQLException {
         ArrayList<Materia> materias = new ArrayList();
         try {
             String consulta;
-            if (estado == 1) {
-                consulta = "SELECT * from materia WHERE `estado` = 1 ORDER BY `nombre` ;";
-            } else {
-                consulta = "SELECT * from materia WHERE 1 ORDER BY `nombre`;";
+            switch (estado) {
+                case (0):
+                    consulta = "SELECT * from materia WHERE `estado` = 0 ORDER BY `nombre` ;";
+                    break;
+                case (1):
+                    consulta = "SELECT * from materia WHERE `estado` = 1 ORDER BY `nombre` ;";
+                    break;
+                case (2):
+                    consulta = "SELECT * from materia WHERE 1 ORDER BY `nombre`;";
+                    break;
             }
 
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
