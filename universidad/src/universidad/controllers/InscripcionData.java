@@ -197,34 +197,6 @@ public class InscripcionData {
         }
         return materias;
     }
-    public ArrayList<Materia> materiasNoInscripto(Alumno alumno) throws IOException, SQLException {
-        @SuppressWarnings("unchecked")
-        ArrayList<Materia> materias = new ArrayList();
-        try {
-            String consulta = "SELECT * from materia WHERE id_materia NOT IN (SELECT id_materia FROM `inscripcion` WHERE `id_alumno` = (SELECT id_alumno FROM alumno WHERE id_alumno= ?));";
-            PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
-            stmt.setInt(1, alumno.getId_alumno());
-            System.out.println(stmt);
-            try (ResultSet result = stmt.executeQuery()) {
-                if (!result.next()) {
-                    System.out.println(" -- No se encontraron materias " + alumno.getApellido());
-                } else {
-                    System.out.println("-- Mostrando materias no inscriptas " + alumno.getApellido());
-                }
-                result.beforeFirst();
-                while (result.next()) {
-                    Materia materia = new Materia();
-                    materia.setNombre(result.getString("nombre"));
-                    materia.setAnio(result.getInt("anio"));
-                    materia.setId_materia(result.getInt("id_materia"));
-                    materia.setEstado(result.getBoolean("estado"));
-                    materias.add(materia);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return materias;
-    }
+    
 
 }

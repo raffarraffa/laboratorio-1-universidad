@@ -64,7 +64,7 @@ public class Universidad {
 // Test  materias inscripcion  para un alumno
         System.out.println("ITEM 1: permitir listar materias de un alumno");
         System.out.println("Test listado materias para el alumno instanciado previamente");
-        materias = inscripcion_data.selectMaterias(alumno);
+        materias = inscripcion_data.selectMaterias(alumno,true);
         for (Materia materia1 : materias) {
             System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
         }
@@ -106,7 +106,7 @@ public class Universidad {
         // se incribie alumno en materia ingles
         inscripcion_data.insertInscripcion(alumno_db, materia);
         // se verifica materias alumno nuevo
-        materias = inscripcion_data.selectMaterias(alumno_db);
+        materias = inscripcion_data.selectMaterias(alumno_db,false);
         for (Materia materia1 : materias) {
             System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
         }
@@ -117,7 +117,7 @@ public class Universidad {
         // se borra alumno en materia ingles
         inscripcion_data.deleteInscripcion(alumno_db, materia);
         // se verifica materias alumno nuevo
-        materias = inscripcion_data.selectMaterias(alumno_db);
+        materias = inscripcion_data.selectMaterias(alumno_db,true);
         for (Materia materia1 : materias) {
             System.out.println(materia1.getAnio() + ", " + materia1.getNombre() + ", " + materia1.isEstado());
         }

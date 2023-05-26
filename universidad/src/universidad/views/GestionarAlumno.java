@@ -71,7 +71,7 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Gestionar Alumno");
+        jLabel1.setText("Gestionar Materia");
         jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Universidad de La Punta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", 2, 11))); // NOI18N
 
         insertAlumno.setText("Agregar");
@@ -110,6 +110,12 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
         jLabel6.setText("Activar/Desactivar Alumno");
         jLabel6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+
+        rbtnActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnActivarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Fecha de Nacimiento");
         jLabel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
@@ -293,6 +299,10 @@ public class GestionarAlumno extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void rbtnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActivarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnActivarActionPerformed
 
     private void limpiar() {
         txtNombre.setText("");

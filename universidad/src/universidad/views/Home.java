@@ -30,6 +30,7 @@ public class Home extends javax.swing.JFrame {
 
     public static GestionarAlumno formAlumno;
     public GestionInscripcion ins;
+    public CargaNotas cn;
 
     public Home() throws IOException, SQLException {
         initComponents();
@@ -74,7 +75,8 @@ public class Home extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         MenuMaterias = new javax.swing.JMenu();
         MenuIncripcion = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jGestionInscripciones = new javax.swing.JMenuItem();
+        jCargarNotas = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jDesktopPane4Layout = new javax.swing.GroupLayout(jDesktopPane4);
         jDesktopPane4.setLayout(jDesktopPane4Layout);
@@ -201,13 +203,21 @@ public class Home extends javax.swing.JFrame {
 
         MenuIncripcion.setText("Inscripcion");
 
-        jMenuItem1.setText("Gestion de Inscripciones");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jGestionInscripciones.setText("Gestion de Inscripciones");
+        jGestionInscripciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jGestionInscripcionesActionPerformed(evt);
             }
         });
-        MenuIncripcion.add(jMenuItem1);
+        MenuIncripcion.add(jGestionInscripciones);
+
+        jCargarNotas.setText("Cargar Notas");
+        jCargarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCargarNotasActionPerformed(evt);
+            }
+        });
+        MenuIncripcion.add(jCargarNotas);
 
         jMenuBar1.add(MenuIncripcion);
 
@@ -238,14 +248,23 @@ public class Home extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tablaAlumnosMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jGestionInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGestionInscripcionesActionPerformed
       
         if (ins == null) {
             ins = new GestionInscripcion();
             ins.setVisible(true);
         }
             
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jGestionInscripcionesActionPerformed
+
+    private void jCargarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCargarNotasActionPerformed
+        // TODO add your handling code here:
+         if (cn == null) {
+            cn = new CargaNotas();
+            cn.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_jCargarNotasActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -286,10 +305,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu MenuIncripcion;
     private javax.swing.JMenu MenuMaterias;
     private javax.swing.JLabel Titulo;
+    private javax.swing.JMenuItem jCargarNotas;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JDesktopPane jDesktopPane4;
+    private javax.swing.JMenuItem jGestionInscripciones;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -28,15 +28,15 @@ public class GestionInscripcion extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
               
-        Alumno alumno = new Alumno();
-        Materia materia = new Materia();
-        AlumnoData alumnoD = new AlumnoData();
-        MateriaData materiaD = new MateriaData();
-        ArrayList<Materia>listadoMaterias = new ArrayList();
-        ArrayList<Materia>listadoMateriaNo = new ArrayList();
-        InscripcionData inscripcion = new InscripcionData();
-        DefaultTableModel modelo= new DefaultTableModel();
-        DefaultTableModel modelo2= new DefaultTableModel();
+       private Alumno alumno = new Alumno();
+       private Materia materia = new Materia();
+       private AlumnoData alumnoD = new AlumnoData();
+       private MateriaData materiaD = new MateriaData();
+       private ArrayList<Materia>listadoMaterias = new ArrayList();
+       private ArrayList<Materia>listadoMateriaNo = new ArrayList();
+       private InscripcionData inscripcion = new InscripcionData();
+       private DefaultTableModel modelo= new DefaultTableModel();
+       private DefaultTableModel modelo2= new DefaultTableModel();
         
         String dni;
     
@@ -294,8 +294,8 @@ public class GestionInscripcion extends javax.swing.JFrame {
                 Inscribir.setEnabled(false);
                 try {
                  //listado de materias que cursa y las que no cursa
-                 listadoMaterias=inscripcion.selectMaterias(alumno);
-                 listadoMateriaNo=inscripcion.materiasNoInscripto(alumno);
+                 listadoMaterias=inscripcion.selectMaterias(alumno,true);
+                 listadoMateriaNo=inscripcion.selectMaterias(alumno,false);
              } catch (IOException ex) {
                  Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
              } catch (SQLException ex) {

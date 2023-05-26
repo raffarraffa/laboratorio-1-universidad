@@ -128,7 +128,7 @@ public class MateriaData {
     public ArrayList<Materia> selectMaterias(int estado) throws IOException, SQLException {
         ArrayList<Materia> materias = new ArrayList();
         try {
-            String consulta;
+            String consulta="";
             switch (estado) {
                 case (0):
                     consulta = "SELECT * from materia WHERE `estado` = 0 ORDER BY `nombre` ;";
