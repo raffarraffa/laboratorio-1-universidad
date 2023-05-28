@@ -5,7 +5,11 @@
  */
 package universidad.views;
 
+import com.sun.glass.ui.Window;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -22,7 +26,7 @@ import universidad.models.Alumno;
  * @author leo_t
  */
 public class GestionarAlumno extends javax.swing.JFrame {
-
+public static editarAlumno formularioEditar;
     /**
      * Creates new form GestionarAlumno
      */
@@ -30,7 +34,8 @@ public class GestionarAlumno extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Gestionar Alumno");
         this.setLocationRelativeTo(null);
-
+        //Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/perfilAlumno.png"));
+       // this.setIconImage(icono);
     }
 
     /**
@@ -43,9 +48,9 @@ public class GestionarAlumno extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         insertAlumno = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -71,7 +76,7 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Gestionar Materia");
+        jLabel1.setText("Gestionar Alumno");
         jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Universidad de La Punta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", 2, 11))); // NOI18N
 
         insertAlumno.setText("Agregar");
@@ -81,19 +86,24 @@ public class GestionarAlumno extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Editar");
-
-        jButton3.setText("Buscar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Cerrar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
             }
         });
 
@@ -110,12 +120,6 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
         jLabel6.setText("Activar/Desactivar Alumno");
         jLabel6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        rbtnActivar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnActivarActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Fecha de Nacimiento");
         jLabel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
@@ -184,9 +188,9 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(insertAlumno, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCerrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -202,15 +206,15 @@ public class GestionarAlumno extends javax.swing.JFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addComponent(insertAlumno)
                 .addGap(36, 36, 36)
-                .addComponent(jButton2)
+                .addComponent(btnEditar)
                 .addGap(37, 37, 37)
-                .addComponent(jButton3)
+                .addComponent(btnBuscar)
                 .addGap(29, 29, 29)
-                .addComponent(jButton4)
+                .addComponent(btnCerrar)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jDesktopPane1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {insertAlumno, jButton2, jButton3, jButton4});
+        jDesktopPane1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBuscar, btnCerrar, btnEditar, insertAlumno});
 
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,13 +227,13 @@ public class GestionarAlumno extends javax.swing.JFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(insertAlumno, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4)
-                        .addComponent(jButton3)
-                        .addComponent(jButton2)))
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addComponent(btnCerrar)
+                        .addComponent(btnBuscar)
+                        .addComponent(btnEditar)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        jDesktopPane1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {insertAlumno, jButton2, jButton3, jButton4});
+        jDesktopPane1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnBuscar, btnCerrar, btnEditar, insertAlumno});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -237,12 +241,14 @@ public class GestionarAlumno extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDesktopPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1)
+                .addContainerGap())
         );
 
         pack();
@@ -250,6 +256,7 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         Home.formAlumno = null;
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void insertAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlumnoActionPerformed
@@ -278,31 +285,44 @@ public class GestionarAlumno extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_insertAlumnoActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    try {
         AlumnoData alumnoData = new AlumnoData();
-        Alumno alumno;
-
-        try {
-            alumno = alumnoData.selectAlumnoDni(txtDNI.getText());
-            Date date = Date.from(alumno.getFecha_nacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            txtApellido.setText(alumno.getApellido());
-            txtNombre.setText(alumno.getNombre());
-            FechaNacimiento.setDate(date);
-            rbtnActivar.setSelected(alumno.isEstado());
-
-        } catch (IOException ex) {
-            Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+        if (!("".equals(txtDNI.getText()))) {
+             Alumno alumno = alumnoData.selectAlumnoDni(txtDNI.getText());
+          
+                 Date date = Date.from(alumno.getFecha_nacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    txtApellido.setText(alumno.getApellido());
+                    txtNombre.setText(alumno.getNombre());
+                    FechaNacimiento.setDate(date);
+                    rbtnActivar.setSelected(alumno.isEstado());
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un DNI para buscar un Alumno.");
         }
+    } catch (IOException ex) {
+        Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        dispose();
+        Home home;
+    try {
+        home = new Home();
+        home.setVisible(true);
+    } catch (IOException | SQLException ex) {
+        Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void rbtnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActivarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnActivarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (formularioEditar == null) {
+            formularioEditar = new editarAlumno();
+            formularioEditar.setVisible(true);
+            this.setVisible(false);
+        }
+ 
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void limpiar() {
         txtNombre.setText("");
@@ -313,47 +333,13 @@ public class GestionarAlumno extends javax.swing.JFrame {
 
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionarAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionarAlumno().setVisible(true);
-            }
-        });
-    }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser FechaNacimiento;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton insertAlumno;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -367,4 +353,6 @@ public class GestionarAlumno extends javax.swing.JFrame {
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+
 }
