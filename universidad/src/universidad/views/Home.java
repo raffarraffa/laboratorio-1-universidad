@@ -288,6 +288,11 @@ public class Home extends javax.swing.JFrame {
         menuInscripcion.add(menuIncripciones);
 
         menuNotas.setText("Cargar Notas");
+        menuNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNotasActionPerformed(evt);
+            }
+        });
         menuInscripcion.add(menuNotas);
 
         jMenuBar1.add(menuInscripcion);
@@ -340,12 +345,19 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_menuMateriaActionPerformed
 
     private void menuIncripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIncripcionesActionPerformed
-     if (formInscripcion == null) {
+     
             formInscripcion = new GestionInscripcion();
             formInscripcion.setVisible(true);
            this.setVisible(false);
-        }
+       
     }//GEN-LAST:event_menuIncripcionesActionPerformed
+
+    private void menuNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNotasActionPerformed
+        // TODO add your handling code here:
+        CargaNotas nota = new CargaNotas();
+            nota.setVisible(true);
+           this.setVisible(false);
+    }//GEN-LAST:event_menuNotasActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
