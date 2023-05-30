@@ -314,11 +314,10 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        if (formAlumno == null) {
             formAlumno = new GestionarAlumno();
             formAlumno.setVisible(true);
-           this.setVisible(false);
-        }
+            this.setVisible(false);
+        
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatosActionPerformed
@@ -337,11 +336,10 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     private void menuMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMateriaActionPerformed
-   if (formMateria == null) {
             formMateria = new GestionMateria();
             formMateria.setVisible(true);
-           this.setVisible(false);
-        }
+             this.setVisible(false);
+        
     }//GEN-LAST:event_menuMateriaActionPerformed
 
     private void menuIncripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIncripcionesActionPerformed

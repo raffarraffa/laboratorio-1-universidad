@@ -333,7 +333,7 @@ public class GestionInscripcion extends javax.swing.JFrame {
         
     }
     
-    public void cargarInscripcion(){
+    public void cargarInscripcion() throws IOException{
         
          try {
              
@@ -352,22 +352,25 @@ public class GestionInscripcion extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
                 }
-             try {
-                 inscripcion.insertInscripcion(alumno, materia);
-             } catch (IOException ex) {
-                 Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
-             }
              
-            JOptionPane.showMessageDialog(null,"Inscripto exitosamente a "+ materia.getNombre());
+             //carga la inscripcion en la base de datos
+             int validar =inscripcion.insertInscripcion(alumno, materia);
+             
+            if(validar==1)
+             {
+                JOptionPane.showMessageDialog(null,"Se inscribió a la materia " + materia.getNombre());
+             }else{
+                 JOptionPane.showMessageDialog(null,"No se pudo inscribir a la materia " + materia.getNombre());
+             }
             cargarTabla();
         }else{
-            JOptionPane.showMessageDialog(null,"No se seleccionó ninguna materia ");
+            JOptionPane.showMessageDialog(null,"No se seleccionó ninguna materia");
         }
         
         
     }
     
-    public void desinscribir(){
+    public void desinscribir() throws IOException{
          try {
              alumno = (Alumno)alumnoD.selectAlumnoDni(dni);
          } catch (IOException ex) {
@@ -383,14 +386,16 @@ public class GestionInscripcion extends javax.swing.JFrame {
              } catch (IOException ex) {
                  Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
              }
-            System.out.println("Alumno SELECCIONADA:"+alumno.toString());
-             try {
-                 inscripcion.deleteInscripcion(alumno, materia);
-             } catch (IOException ex) {
-                 Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
-             }
              
-            JOptionPane.showMessageDialog(null,"Se dio de baja la materia " + materia.getNombre());
+             //elimina la inscripcion en la base de datos
+             int validar= inscripcion.deleteInscripcion(alumno, materia);
+             if(validar==1)
+             {
+                JOptionPane.showMessageDialog(null,"Se dio de baja la materia " + materia.getNombre());
+             }else{
+                 JOptionPane.showMessageDialog(null,"No se pudo dar de baja a la materia " + materia.getNombre());
+             }
+                 
             cargarTabla();
         }else{
             JOptionPane.showMessageDialog(null,"No se seleccionó ninguna materia ");
@@ -414,17 +419,25 @@ public class GestionInscripcion extends javax.swing.JFrame {
     }//GEN-LAST:event_cursadasMouseClicked
 
     private void InscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InscribirActionPerformed
-        // TODO add your handling code here:
+           try {
+               // TODO add your handling code here:
 
-        cargarInscripcion();
+               cargarInscripcion();
+           } catch (IOException ex) {
+               Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
+           }
         NoCursadas.clearSelection();
 
     }//GEN-LAST:event_InscribirActionPerformed
 
     private void DesinscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesinscribirActionPerformed
-        // TODO add your handling code here:
+           try {
+               // TODO add your handling code here:
 
-        desinscribir();
+               desinscribir();
+           } catch (IOException ex) {
+               Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
+           }
         cursadas.clearSelection();
 
     }//GEN-LAST:event_DesinscribirActionPerformed
