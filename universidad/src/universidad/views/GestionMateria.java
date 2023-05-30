@@ -331,7 +331,7 @@ public class GestionMateria extends javax.swing.JFrame {
                
                 JOptionPane. showMessageDialog(null,"La materia ya se encuentra en la lista");
             }else{
-                 //materiaD.insertMateria(materia);
+                 materiaD.insertMateria(materia);
             }
         }
         

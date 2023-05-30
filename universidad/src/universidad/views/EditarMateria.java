@@ -34,7 +34,7 @@ public class EditarMateria extends javax.swing.JFrame {
     public EditarMateria() {
         initComponents();
         this.setTitle("Editar Materia");
-
+        
     }
 
     /**

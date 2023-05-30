@@ -280,6 +280,7 @@ public static editarAlumno formularioEditar;
     private void insertAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlumnoActionPerformed
         AlumnoData alumnoData = new AlumnoData();
         Alumno alumno = new Alumno();
+        Alumno alumnoAux= new Alumno();
         Date fechaSeleccionada = FechaNacimiento.getDate();
         Instant instante = fechaSeleccionada.toInstant();
         ZoneId zona = ZoneId.systemDefault();
@@ -293,14 +294,33 @@ public static editarAlumno formularioEditar;
         alumno.setNombre(txtNombre.getText());
         alumno.setFecha_nacimiento(fechaNac);
         alumno.setEstado(rbtnActivar.getVerifyInputWhenFocusTarget());
-        try {
-            alumnoData.insertAlumno(alumno);
-            JOptionPane.showConfirmDialog(this, "Esta a punto de guardar un alumno nuevo");
-            limpiar();
-        } catch (IOException ex) {
-            Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al insertar un alumno: " + ex);
-        }
+        
+        //verifica si ya está el dni en la base de datos
+            try {
+                alumnoAux=alumnoData.selectAlumnoDni(alumno.getDni());
+            } catch (IOException ex) {
+                Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            if(alumnoAux.getDni()!=null)
+            {
+               
+                JOptionPane. showMessageDialog(null,"El alumno ya se encuentra en la lista");
+            }else{
+                     //inserta el alumno 
+                try {
+
+                    alumnoData.insertAlumno(alumno);
+                    JOptionPane.showConfirmDialog(this, "Esta a punto de guardar un alumno nuevo");
+                    limpiar();
+                } catch (IOException ex) {
+                    Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Error al insertar un alumno: " + ex);
+                }
+            }
+       
+            
+       
     }//GEN-LAST:event_insertAlumnoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
