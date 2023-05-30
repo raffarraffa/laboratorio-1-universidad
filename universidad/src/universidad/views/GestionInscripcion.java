@@ -290,9 +290,9 @@ public class GestionInscripcion extends javax.swing.JFrame {
             Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-        if(alumno.isEstado()==false)
+        if(alumno.getDni()==null)
             {
-                JOptionPane.showMessageDialog(null,"El alumno se encuentra inactivo");
+                JOptionPane.showMessageDialog(null,"El alumno no está en la lista");
             }
         //si el alumno está activo se cargan las materias en las tablas
         else{

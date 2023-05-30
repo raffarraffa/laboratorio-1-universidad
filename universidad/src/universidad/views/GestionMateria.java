@@ -27,6 +27,7 @@ public class GestionMateria extends javax.swing.JFrame {
      * Creates new form GestionarAlumno
      */
     private Materia materia=new Materia();
+    private Materia materiaAux=new Materia();
     private InscripcionData inscripcionD=new InscripcionData(); 
     private MateriaData materiaD=new MateriaData(); 
     
@@ -287,6 +288,13 @@ public class GestionMateria extends javax.swing.JFrame {
         }else{
             em= new EditarMateria();
             em.setVisible(true);
+            
+            try {
+                materia=materiaD.selectMateria(txtNombre.getText());
+            } catch (IOException ex) {
+                Logger.getLogger(GestionMateria.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            em.textId.setText(String.valueOf(materia.getId_materia()));
             em.nuevoNombre.setText(txtNombre.getText());
             em.nuevoAnio.setText(txtAnio.getText());
                 if(rbtnActivar.isSelected()==true){
@@ -296,10 +304,7 @@ public class GestionMateria extends javax.swing.JFrame {
                   }
                 this.setVisible(false);
         }
-            
-        
-        
-        
+          
     }//GEN-LAST:event_EditarActionPerformed
 
     
@@ -324,20 +329,17 @@ public class GestionMateria extends javax.swing.JFrame {
             }else
                 estado=false;
             materia.setEstado(estado);
-
-             materia=materiaD.selectMateria(txtNombre.getText());
-            if(materia.getNombre()!=null)
+               System.out.println("MATERIA:"+materia.toString());
+             materiaAux=materiaD.selectMateria(txtNombre.getText());
+            if(materiaAux.getNombre()!=null)
             {
                
                 JOptionPane. showMessageDialog(null,"La materia ya se encuentra en la lista");
             }else{
                  materiaD.insertMateria(materia);
+                 Editar.setEnabled(true);
             }
-        }
-        
-        
-        
-        
+        } 
     }
     
     public void buscarMateria(){

@@ -281,45 +281,53 @@ public static editarAlumno formularioEditar;
         AlumnoData alumnoData = new AlumnoData();
         Alumno alumno = new Alumno();
         Alumno alumnoAux= new Alumno();
-        Date fechaSeleccionada = FechaNacimiento.getDate();
-        Instant instante = fechaSeleccionada.toInstant();
-        ZoneId zona = ZoneId.systemDefault();
-        ZonedDateTime zonedDateTime = instante.atZone(zona);
-        LocalDate fechaNac = zonedDateTime.toLocalDate();
+        if(FechaNacimiento.getDate()!=null)
+        {
+            Date fechaSeleccionada = FechaNacimiento.getDate();
+            Instant instante = fechaSeleccionada.toInstant();
+            ZoneId zona = ZoneId.systemDefault();
+            ZonedDateTime zonedDateTime = instante.atZone(zona);
+            LocalDate fechaNac = zonedDateTime.toLocalDate();
+            
+             alumno.setFecha_nacimiento(fechaNac);
+        }
         /**
          * *************PARSEAR UN DATE A LOCALDATE******************
          */
         alumno.setDni(txtDNI.getText());
         alumno.setApellido(txtApellido.getText());
         alumno.setNombre(txtNombre.getText());
-        alumno.setFecha_nacimiento(fechaNac);
         alumno.setEstado(rbtnActivar.getVerifyInputWhenFocusTarget());
         
-        //verifica si ya está el dni en la base de datos
-            try {
-                alumnoAux=alumnoData.selectAlumnoDni(alumno.getDni());
-            } catch (IOException ex) {
-                Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            if(alumnoAux.getDni()!=null)
-            {
-               
-                JOptionPane. showMessageDialog(null,"El alumno ya se encuentra en la lista");
-            }else{
-                     //inserta el alumno 
+        if(txtDNI.getText()==null || txtApellido.getText()==null || txtNombre.getText()==null || FechaNacimiento.getDate()==null)
+        {
+            JOptionPane. showMessageDialog(null,"Llene los campos vacíos para ingresar el alumno");
+        }else{
+            //verifica si ya está el dni en la base de datos
                 try {
-
-                    alumnoData.insertAlumno(alumno);
-                    JOptionPane.showConfirmDialog(this, "Esta a punto de guardar un alumno nuevo");
-                    limpiar();
+                    alumnoAux=alumnoData.selectAlumnoDni(alumno.getDni());
                 } catch (IOException ex) {
                     Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Error al insertar un alumno: " + ex);
                 }
-            }
+
+                if(alumnoAux.getDni()!=null)
+                {
+
+                    JOptionPane. showMessageDialog(null,"El alumno ya se encuentra en la lista");
+                }else{
+                         //inserta el alumno 
+                    try {
+
+                        alumnoData.insertAlumno(alumno);
+                        JOptionPane.showConfirmDialog(this, "Esta a punto de guardar un alumno nuevo");
+                        limpiar();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Error al insertar un alumno: " + ex);
+                    }
+                }
        
-            
+         } 
        
     }//GEN-LAST:event_insertAlumnoActionPerformed
 
