@@ -259,7 +259,11 @@ public class GestionMateria extends javax.swing.JFrame {
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
         
+        try {
             buscarMateria();
+        } catch (IOException ex) {
+            Logger.getLogger(GestionMateria.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jBuscarActionPerformed
 
@@ -342,22 +346,23 @@ public class GestionMateria extends javax.swing.JFrame {
         } 
     }
     
-    public void buscarMateria(){
+    public void buscarMateria() throws IOException{
         String nombre= txtNombre.getText();
         if(txtNombre.getText().length()==0)
         {
             JOptionPane. showMessageDialog(null,"No se ingresó nombre");
         }else{
-            try {
-                materia=materiaD.selectMateria(nombre);
-                } catch (IOException ex) {
-               // Logger.getLogger(GestionMateria.class.getName()).log(Level.SEVERE, null, ex);
-               JOptionPane. showMessageDialog(null,"No se encontró la materia");
-                }
-            //settea los datos en los textField
-            rbtnActivar.setSelected(materia.isEstado());
-            txtAnio.setText(Integer.toString(materia.getAnio()));
-            Editar.setEnabled(true);
+            materia=materiaD.selectMateria(nombre);
+                    
+              if(materia.getId_materia()==0)
+              {
+                  JOptionPane. showMessageDialog(null,"No se encontró la materia");
+              }else{
+                   //settea los datos en los textField
+                    rbtnActivar.setSelected(materia.isEstado());
+                    txtAnio.setText(Integer.toString(materia.getAnio()));
+                    Editar.setEnabled(true);
+              }
         }
     }
     

@@ -290,16 +290,13 @@ public class GestionInscripcion extends javax.swing.JFrame {
             Logger.getLogger(GestionInscripcion.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-        if(alumno.getDni()==null)
+        //verifica si el alumno está en la lista
+        if(alumno.getDni()==null)//no está
             {
                 JOptionPane.showMessageDialog(null,"El alumno no está en la lista");
-            }
-        //si el alumno está activo se cargan las materias en las tablas
-        else{
-                
-                Inscribir.setEnabled(false);
+            }else{//sí está en la lista
                 try {
-                 //listado de materias que cursa y las que no cursa
+                 //selecciona las materias que cursa y las que no cursa
                  listadoMaterias=inscripcion.selectMaterias(alumno,true);
                  listadoMateriaNo=inscripcion.selectMaterias(alumno,false);
              } catch (IOException ex) {
@@ -310,15 +307,13 @@ public class GestionInscripcion extends javax.swing.JFrame {
 
                 //carga de las tablas
                for (Materia listadoMateria : listadoMaterias) {
-                  // if(materia.isEstado()==true)
                     modelo.addRow(new Object[]{listadoMateria.getId_materia(),listadoMateria.getNombre(),listadoMateria.getAnio()});
-
                 }
                     if (modelo.getRowCount() == 0) {
-                         JOptionPane.showMessageDialog(null,"No se encontraron materias activas en las que este inscripto");
-                         Inscribir.setEnabled(false);
+                         JOptionPane.showMessageDialog(null,"No se encontraron materias en las que este inscripto");
+                         Desinscribir.setEnabled(false);
                     }else{
-                        Inscribir.setEnabled(true);
+                        Desinscribir.setEnabled(true);
                     }
 
                for (Materia listadoMateria : listadoMateriaNo) {
@@ -327,11 +322,11 @@ public class GestionInscripcion extends javax.swing.JFrame {
                     
                 }
                     if (modelo2.getRowCount() == 0) {
-                         JOptionPane.showMessageDialog(null,"No se encontraron materias activas sin inscribir");
-                         Desinscribir.setEnabled(false);
+                         JOptionPane.showMessageDialog(null,"No se encontraron materias sin inscribir");
+                         Inscribir.setEnabled(false);
                     }
                     else{
-                        Desinscribir.setEnabled(true);
+                        Inscribir.setEnabled(true);
                     }
                         
             }
