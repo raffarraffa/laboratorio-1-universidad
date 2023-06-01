@@ -139,22 +139,17 @@ public class AlumnoData {
             PreparedStatement stmt = Conexion.getConnection().prepareStatement(consulta);
             stmt.setString(1, dni);
             System.out.println(stmt);
-            try (ResultSet result = stmt.executeQuery()) {
-                if (result == null) {
-                    System.out.println("Resultado consulta NULL ");
-                } else {
-                    System.out.println("Resultado consulta OK ");
-                }
-                if (result.next()) {
-                    alumno.setId_alumno(result.getInt("id_alumno"));
-                    alumno.setDni(result.getString("dni"));
-                    alumno.setApellido(result.getString("apellido"));
-                    alumno.setNombre(result.getString("nombre"));
-                    alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
-                    alumno.setEstado(result.getBoolean("estado"));
-                }
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                alumno.setId_alumno(result.getInt("id_alumno"));
+                alumno.setDni(result.getString("dni"));
+                alumno.setApellido(result.getString("apellido"));
+                alumno.setNombre(result.getString("nombre"));
+                alumno.setFecha_nacimiento(result.getDate("fecha_nacimiento").toLocalDate());
+                alumno.setEstado(result.getBoolean("estado"));
             }
         } catch (SQLException e) {
+            System.out.println("mierda noencotrnado");
             e.printStackTrace();
         }
         return alumno;

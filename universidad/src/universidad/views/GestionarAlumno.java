@@ -5,7 +5,6 @@
  */
 package universidad.views;
 
-
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -26,7 +25,9 @@ import universidad.models.Alumno;
  * @author leo_t
  */
 public class GestionarAlumno extends javax.swing.JFrame {
-public static editarAlumno formularioEditar;
+
+    public static editarAlumno formularioEditar;
+
     /**
      * Creates new form GestionarAlumno
      */
@@ -274,22 +275,21 @@ public static editarAlumno formularioEditar;
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         Home.formAlumno = null;
-        
+
     }//GEN-LAST:event_formWindowClosed
 
     private void insertAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlumnoActionPerformed
         AlumnoData alumnoData = new AlumnoData();
         Alumno alumno = new Alumno();
-        Alumno alumnoAux= new Alumno();
-        if(FechaNacimiento.getDate()!=null)
-        {
+        Alumno alumnoAux = new Alumno();
+        if (FechaNacimiento.getDate() != null) {
             Date fechaSeleccionada = FechaNacimiento.getDate();
             Instant instante = fechaSeleccionada.toInstant();
             ZoneId zona = ZoneId.systemDefault();
             ZonedDateTime zonedDateTime = instante.atZone(zona);
             LocalDate fechaNac = zonedDateTime.toLocalDate();
-            
-             alumno.setFecha_nacimiento(fechaNac);
+
+            alumno.setFecha_nacimiento(fechaNac);
         }
         /**
          * *************PARSEAR UN DATE A LOCALDATE******************
@@ -298,67 +298,68 @@ public static editarAlumno formularioEditar;
         alumno.setApellido(txtApellido.getText());
         alumno.setNombre(txtNombre.getText());
         alumno.setEstado(rbtnActivar.getVerifyInputWhenFocusTarget());
-        
-        if(txtDNI.getText()==null || txtApellido.getText()==null || txtNombre.getText()==null || FechaNacimiento.getDate()==null)
-        {
-            JOptionPane. showMessageDialog(null,"Llene los campos vacíos para ingresar el alumno");
-        }else{
+
+        if (txtDNI.getText() == null || txtApellido.getText() == null || txtNombre.getText() == null || FechaNacimiento.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Llene los campos vacíos para ingresar el alumno");
+        } else {
             //verifica si ya está el dni en la base de datos
+            try {
+                alumnoAux = alumnoData.selectAlumnoDni(alumno.getDni());
+            } catch (IOException ex) {
+                Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (alumnoAux.getDni() != null) {
+
+                JOptionPane.showMessageDialog(null, "El alumno ya se encuentra en la lista");
+            } else {
+                //inserta el alumno
                 try {
-                    alumnoAux=alumnoData.selectAlumnoDni(alumno.getDni());
+
+                    alumnoData.insertAlumno(alumno);
+                    JOptionPane.showConfirmDialog(this, "Esta a punto de guardar un alumno nuevo");
+                    limpiar();
                 } catch (IOException ex) {
                     Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Error al insertar un alumno: " + ex);
                 }
+            }
 
-                if(alumnoAux.getDni()!=null)
-                {
+        }
 
-                    JOptionPane. showMessageDialog(null,"El alumno ya se encuentra en la lista");
-                }else{
-                         //inserta el alumno 
-                    try {
-
-                        alumnoData.insertAlumno(alumno);
-                        JOptionPane.showConfirmDialog(this, "Esta a punto de guardar un alumno nuevo");
-                        limpiar();
-                    } catch (IOException ex) {
-                        Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
-                        System.out.println("Error al insertar un alumno: " + ex);
-                    }
-                }
-       
-         } 
-       
     }//GEN-LAST:event_insertAlumnoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-    try {
-        AlumnoData alumnoData = new AlumnoData();
-        if (!("".equals(txtDNI.getText()))) {
-             Alumno alumno = alumnoData.selectAlumnoDni(txtDNI.getText());
-          
-                 Date date = Date.from(alumno.getFecha_nacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        try {
+            AlumnoData alumnoData = new AlumnoData();
+            if (!("".equals(txtDNI.getText()))) {
+                Alumno alumno = alumnoData.selectAlumnoDni(txtDNI.getText());
+                if (alumno.getId_alumno() != 0) {
+                    Date date = Date.from(alumno.getFecha_nacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
                     txtApellido.setText(alumno.getApellido());
                     txtNombre.setText(alumno.getNombre());
                     FechaNacimiento.setDate(date);
                     rbtnActivar.setSelected(alumno.isEstado());
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese un DNI para buscar un Alumno.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "NO existe el DNI en sistema.\n Ingrese un DNI valido para buscar un Alumno.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un DNI para buscar un Alumno.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (IOException ex) {
-        Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
-    }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
         Home home;
-    try {
-        home = new Home();
-        home.setVisible(true);
-    } catch (IOException | SQLException ex) {
-        Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            home = new Home();
+            home.setVisible(true);
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(GestionarAlumno.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -367,7 +368,7 @@ public static editarAlumno formularioEditar;
             formularioEditar.setVisible(true);
             this.setVisible(false);
         }
- 
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void limpiar() {
@@ -379,7 +380,6 @@ public static editarAlumno formularioEditar;
 
     }
 
-   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser FechaNacimiento;
     private javax.swing.JButton btnBuscar;
@@ -400,6 +400,5 @@ public static editarAlumno formularioEditar;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
-
 
 }
