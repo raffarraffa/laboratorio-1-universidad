@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidad.controllers.AlumnoData;
-import universidad.controllers.Conexion;
 import universidad.controllers.InscripcionData;
 import universidad.controllers.MateriaData;
 import universidad.models.Alumno;
@@ -36,14 +35,6 @@ public class Home extends javax.swing.JFrame {
     public Home() throws IOException, SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
-//        Conexion.getConnection();
-//        String titulo = "Grupo 15 C1";
-//        String mensaje = "<html>"
-//                + "<div style='text-align: center;'><h2>Sistema Gestion Alumnos</h2></div>"
-//                + "<div style='text-align: center;'><h4>Conectar a base datos</h4></div>"
-//                + "</html>";
-//        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
-//        Conexion.getConnection();
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/graduacion.png")); // linea para accerder al recurso
         this.setTitle("Home");
         this.setIconImage(icono); //linea para setear un icono al programa
@@ -444,7 +435,7 @@ public class Home extends javax.swing.JFrame {
     public final void mostrarTodasMaterias() throws IOException, SQLException {
         DefaultTableModel modeloMateria = new DefaultTableModel();
         MateriaData materia = new MateriaData();
-        ArrayList<Materia> materias = materia.selectMaterias(0);
+        ArrayList<Materia> materias = materia.selectMaterias(2);
         modeloMateria.addColumn("Nombre");
         modeloMateria.addColumn("Año en curso");
         modeloMateria.addColumn("Estado");

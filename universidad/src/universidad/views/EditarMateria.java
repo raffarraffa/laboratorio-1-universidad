@@ -5,6 +5,8 @@
  */
 package universidad.views;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -34,7 +36,9 @@ public class EditarMateria extends javax.swing.JFrame {
     public EditarMateria() {
         initComponents();
         this.setTitle("Editar Materia");
-        
+        this.setLocationRelativeTo(null);
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/archivo.png")); // linea para accerder al recurso
+        this.setIconImage(icono);
     }
 
     /**

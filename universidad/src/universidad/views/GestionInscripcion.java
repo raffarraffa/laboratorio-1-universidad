@@ -5,6 +5,8 @@
  */
 package universidad.views;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,10 +47,14 @@ public class GestionInscripcion extends javax.swing.JFrame {
     
     public GestionInscripcion() {
        initComponents();
+       this.setLocationRelativeTo(null);
+        this.setTitle("Gestionar Inscripciones");
         columnas();
         //inicia la vista con los botones deshabilitados
         Desinscribir.setEnabled(false);
         Inscribir.setEnabled(false);
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/inscripcion.png")); // linea para accerder al recurso
+        this.setIconImage(icono);
     }
 
     /**

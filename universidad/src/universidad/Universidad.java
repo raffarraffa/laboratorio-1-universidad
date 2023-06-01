@@ -18,9 +18,10 @@ import universidad.models.Materia;
  *
  * @author raffarraffa
  */
+/* 
 public class Universidad {
 
-    public static void main(String[] args) throws IOException, SQLException {
+   public static void main(String[] args) throws IOException, SQLException {
 
 // Conexion, patron SINGLETON
         System.out.println("\t\t\t *******************************************************************");
@@ -201,4 +202,4 @@ public class Universidad {
         return string;
     }
 
-}
+}*/

@@ -5,7 +5,7 @@
  */
 package universidad.views;
 
-import com.sun.glass.ui.Window;
+
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -34,8 +34,8 @@ public static editarAlumno formularioEditar;
         initComponents();
         this.setTitle("Gestionar Alumno");
         this.setLocationRelativeTo(null);
-        //Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/perfilAlumno.png"));
-       // this.setIconImage(icono);
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/perfil.png"));
+        this.setIconImage(icono);
     }
 
     /**

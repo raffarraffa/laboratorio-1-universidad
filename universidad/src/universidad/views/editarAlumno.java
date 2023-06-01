@@ -42,8 +42,8 @@ public class editarAlumno extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Editar Alumno");
-       // Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/editarAlumno.png"));
-       // this.setIconImage(icono);
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/editarAlumno.png"));
+        this.setIconImage(icono);
         try {
             cargarDNIAlumnos();
             //cargarMaterias();

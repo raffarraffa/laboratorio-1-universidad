@@ -5,6 +5,8 @@
  */
 package universidad.views;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import universidad.controllers.InscripcionData;
 import universidad.controllers.MateriaData;
-import universidad.models.Alumno;
 import universidad.models.Materia;
 
 
@@ -37,6 +38,10 @@ public class GestionMateria extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Gestionar Materia");
         Editar.setEnabled(false);
+        this.setLocationRelativeTo(null);
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/archivo.png")); // linea para accerder al recurso
+        this.setIconImage(icono);
+        
         
     }
 

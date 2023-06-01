@@ -5,6 +5,8 @@
  */
 package universidad.views;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ public class CargaNotas extends javax.swing.JFrame {
     public CargaNotas() {
         initComponents();
         comboMaterias.removeAllItems();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Cargar Notas");
+            Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/universidad/img/inscripcion.png")); // linea para accerder al recurso
+        this.setIconImage(icono);
     }
 
     /**
